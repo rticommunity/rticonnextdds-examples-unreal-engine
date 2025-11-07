@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/rti/rti_connext_dds-7.3.0/bin/../resource/app/app_support/rtiddsgen/schema/rti_dds_profiles.xsd">
+<types>
+<struct name= "Position" nested="true">
+  <member name="x" type="float64"/>
+  <member name="y" type="float64"/>
+  <member name="z" type="float64"/>
+</struct>
+<struct name= "Velocity" nested="true">
+  <member name="x" type="float64"/>
+  <member name="y" type="float64"/>
+  <member name="z" type="float64"/>
+</struct>
+<struct name= "Attitude" nested="true">
+  <member name="roll" type="float64"/>
+  <member name="pitch" type="float64"/>
+  <member name="yaw" type="float64"/>
+</struct>
+<struct name= "AActorType">
+  <member name="pos" type="nonBasic"  nonBasicTypeName= "Position"/>
+  <member name="vel" type="nonBasic"  nonBasicTypeName= "Velocity"/>
+  <member name="rot" type="nonBasic"  nonBasicTypeName= "Attitude"/>
+</struct>
+</types>
+</dds>
