@@ -1,4 +1,4 @@
-# Example Code: Connext DDS with Unreal Engine 
+# ConnextExample: RTI Connext DDS with Unreal Engine 
 
 This example was built with the following product versions:
 
@@ -266,4 +266,4 @@ are platform independent and should work both in Windows and Linux.
 
 * Changing the version of **Unreal Engine**
 
-    If you are using a different version of **Unreal Engine**, you should consult **Unreal** documentation on how to update your project to work with a version of **Unreal Engine** newer than 5.6.1.  To port to an older version of **Unreal Engine**, you should just manually create a new project with your version's IDE and then add the C++ source and header files, the ".xml" QoS file to the project.  And then add the required compiler macros, include paths, and libraries for *RTI Connext DDS** to the file "*\<project\>.Build.cs*" of your project.
+    If you are using a different version of **Unreal Engine**, you should consult **Unreal** documentation on how to update your project to work with a version of **Unreal Engine** newer than 5.6.1.  To port to an older version of **Unreal Engine**, you should just manually create a new project with your version's IDE and then add the C++ source and header files, the ".xml" QoS file to the project.  And then add the required compiler macros, include paths, and libraries for **RTI Connext DDS** to the file "*\<project\>.Build.cs*" of your project.
