@@ -34,20 +34,22 @@ The example was modified to publish the state of the vehicle (Cartesian position
 ### To Run
 
 1.  Assuming that you have **Unreal Engine 5.6.1** (or compatible version) installed.  You should also install **RTI Connext DDS Professional 7.3.0**.  You can get a free download and license from [www.rti.com/get-connext](https://www.rti.com/get-connext).
-
+    
     Install per instructions and make a note of your installation directory.  You will need create and set the value of an environment variable `NDDSHOME = <install dir>` in your host.
 
-2.  Now compile using **Microsoft Visual Studio**.  Open [ConnextExample.sln](./ConnextExample.sln) with **Visual Studio 2022** (or compatible version).  Select the `Development Editor` configuration and build the solution.
+2.  Open [ConnextExample.uproject](./ConnextExample.uproject) in the **Unreal Engine** IDE (aka *Editor*).
+    
+    Generate the *Visual Studio Project* using **Tools --> Generate Visual Studio Project**.
 
-3.  Open [ConnextExample.uproject](./ConnextExample.uproject) in the **Unreal Engine** IDE.
+3.  Now compile using **Microsoft Visual Studio**.  Open **Visual Studio 2022** (or compatible version), either using **Tools --> Open Visual Studio** or directly clicking on the file [ConnextExample.sln](./ConnextExample.sln).
+    
+    In **Visual Studio**, select the `Development Editor` configuration and Build the solution.
 
-    Compile your application in the IDE using the "Compile" button.
+4.  Now start the application in the *PIE* (Play-In-Editor) using the "Play" button with the green triangle icon.
 
-4.  Now start the application in the *PIE* (Play-In-Editor) using the "play" button with the green triangle icon.
+5.  You can move the vehicle using the keyboard's up/down/left/right arrow keys (after clicking on the application window showing the vehicle).
 
-5.  You can move the vehicle using the keyboard's up/down/left/right arrow buttons (after clicking on the application window showing the vehicle).
-
-6.  You can see that the vehicle's state as well as the command inputs (keyboard commands) are being published by *DDS* either by using the **RTI Connext** `rtiddsspy` utility from a command prompt or by starting **RTI Admin Console** and subscribing to the `VehicleState` and `InputCommand` topics in *Admin Console*.  
+6.  You can see that the vehicle's state as well as the command inputs (keyboard commands) are being published by **DDS** either by using the **RTI Connext** `rtiddsspy` utility from a command prompt or by starting **RTI Admin Console** and subscribing to the `VehicleState` and `InputCommand` topics in **Admin Console**.  
 
     The *User's Manual* for **RTI Admin Console** can be found [here](https://community.rti.com/static/documentation/connext-dds/current/doc/manuals/connext_dds_professional/tools/admin_console/index.html).
 
@@ -58,7 +60,7 @@ The following files were created and added to the project:
 
 * [ConnextExample.sln](./ConnextExample.sln)
 
-    Automatically generated when opening Visual Studio using the **Unreal IDE --> Tools --> Open Visual Studio**.
+    Automatically generated when opening Visual Studio using the **Unreal Editor --> Tools --> Open Visual Studio**.
 
 * [ConnextExample.Build.cs](./Source/ConnextExample/ConnextExample.Build.cs)
 
@@ -100,7 +102,7 @@ The following files were created and added to the project:
     
     [DomainParticipantComponent.cpp](./Source/ConnextExample/DomainParticipantComponent.cpp)
 
-    These files define a C++ component derived from *UActorComponent* that you should add as a component into a *Blueprint*, see this [figure](#dds-component).  The *DomainParticipantComponent* will instantiate a **DDS** *DomainParticipant* when the *InitializeParticipant* method is invoked in the *Blueprint* (With the *ConnextExample* opened in the **Unreal IDE**, see *Content Drawer --> Connext Example --> All --> Content --> Vehicle Template --> Blueprints --> BP_VehicleAdvPawnBase*), see this [figure](#dds-init).
+    These files define a C++ component derived from *UActorComponent* that you should add as a component into a *Blueprint*, see this [figure](#dds-component).  The *DomainParticipantComponent* will instantiate a **DDS** *DomainParticipant* when the *InitializeParticipant* method is invoked in the *Blueprint* (With the *ConnextExample* opened in the **Unreal Editor**, see *Content Drawer --> Connext Example --> All --> Content --> Vehicle Template --> Blueprints --> BP_VehicleAdvPawnBase*), see this [figure](#dds-init).
 
     The *InitializeParticipant* method takes a **DDS** *DomainId*, a *QosProfilePathName* of the format "<QosLibrary>::<QosProfile>", and the path name of a file contain the XML QoS Profile definitions used to create the *DomainParticipant*, *DataWriters* and *DataReaders*.
 
@@ -266,4 +268,4 @@ are platform independent and should work both in Windows and Linux.
 
 * Changing the version of **Unreal Engine**
 
-    If you are using a different version of **Unreal Engine**, you should consult **Unreal** documentation on how to update your project to work with a version of **Unreal Engine** newer than 5.6.1.  To port to an older version of **Unreal Engine**, you should just manually create a new project with your version's IDE and then add the C++ source and header files, the ".xml" QoS file to the project.  And then add the required compiler macros, include paths, and libraries for **RTI Connext DDS** to the file "*\<project\>.Build.cs*" of your project.
+    If you are using a different version of **Unreal Engine**, you should consult **Unreal** documentation on how to update your project to work with a version of **Unreal Engine** newer than 5.6.1.  To port to an older version of **Unreal Engine**, you should just manually create a new project with your version's *Editor* and then add the C++ source and header files, the ".xml" QoS file to the project.  And then add the required compiler macros, include paths, and libraries for **RTI Connext DDS** to the file "*\<project\>.Build.cs*" of your project.
