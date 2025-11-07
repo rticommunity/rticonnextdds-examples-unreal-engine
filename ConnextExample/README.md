@@ -38,14 +38,18 @@ The example was modified to publish the state of the vehicle (Cartesian position
     Install per instructions and make a note of your installation directory.  You will need create and set the value of an environment variable `NDDSHOME = <install dir>` in your host.
 
 2.  Open [ConnextExample.uproject](./ConnextExample.uproject) in the **Unreal Engine** IDE (aka *Editor*).
-    
-    Generate the *Visual Studio Project* using **Tools --> Generate Visual Studio Project**.
 
-3.  Now compile using **Microsoft Visual Studio**.  Open **Visual Studio 2022** (or compatible version), either using **Tools --> Open Visual Studio** or directly clicking on the file [ConnextExample.sln](./ConnextExample.sln).
+    This may open a dialog window telling you that the *ConnextExample* module is "missing or built with a different engine version" and asks if you "would like to rebuild them now?".  Go ahead and click on *Yes*...when completed successfully, the *Editor* should open with the project loaded.
+    
+    Now Generate or Refresh the *Visual Studio Project* using **Tools --> Generate Visual Studio Project** or **Tools --> Refresh Visual Studio Project**
+
+3.  Compile the **Connext DDS** C++ components using **Microsoft Visual Studio**.  
+
+    Open **Visual Studio 2022** (or compatible version), either using **Tools --> Open Visual Studio** or directly clicking on the file [ConnextExample.sln](./ConnextExample.sln).
     
     In **Visual Studio**, select the `Development Editor` configuration and Build the solution.
 
-4.  Now start the application in the *PIE* (Play-In-Editor) using the "Play" button with the green triangle icon.
+4.  Start the application in the *PIE* (Play-In-Editor) using the "Play" button with the green triangle icon.
 
 5.  You can move the vehicle using the keyboard's up/down/left/right arrow keys (after clicking on the application window showing the vehicle).
 
