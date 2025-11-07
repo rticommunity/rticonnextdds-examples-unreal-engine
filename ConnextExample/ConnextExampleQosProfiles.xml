@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
  * (c) 2025 Copyright, Real-Time Innovations, Inc. (RTI) All rights reserved.
  *
@@ -11,7 +12,6 @@
  * inability to use the software.
  -->
 
-  <?xml version="1.0" encoding="UTF-8"?>
 <dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/7.3.0/rti_routing_service.xsd" version="7.3.0">
   
   <qos_library name="MyQosLibrary">
