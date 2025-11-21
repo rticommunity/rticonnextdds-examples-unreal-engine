@@ -4,14 +4,14 @@
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
 This file was generated from UnrealBasicDDSTypes.idl
-using RTI Code Generator (rtiddsgen) version 4.3.0.7.
+using RTI Code Generator (rtiddsgen) version 4.6.0.
 The rtiddsgen tool is part of the RTI Connext DDS distribution.
 For more information, type 'rtiddsgen -help' at a command shell
 or consult the Code Generator User's Manual.
 */
 
-#ifndef UnrealBasicDDSTypesPlugin_795071160_h
-#define UnrealBasicDDSTypesPlugin_795071160_h
+#ifndef UnrealBasicDDSTypesPlugin_795071791_h
+#define UnrealBasicDDSTypesPlugin_795071791_h
 
 #include "UnrealBasicDDSTypes.h"
 
@@ -21,11 +21,14 @@ struct RTICdrStream;
 #include "pres/pres_typePlugin.h"
 #endif
 
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, start exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) && defined(RTI_WIN32)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+#if !defined(RTI_WIN32) && defined(NDDS_USER_SYMBOL_EXPORT)
+#undef NDDSUSERDllExport
+#define NDDSUSERDllExport __attribute__((visibility("default")))
 #endif
 
 extern "C"{
@@ -734,12 +737,9 @@ extern "C"{
 
 }
 
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, stop exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) || defined(NDDS_USER_SYMBOL_EXPORT)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport
 #endif
 
-#endif /* UnrealBasicDDSTypesPlugin_795071160_h */
-
+#endif /* UnrealBasicDDSTypesPlugin_795071791_h */
