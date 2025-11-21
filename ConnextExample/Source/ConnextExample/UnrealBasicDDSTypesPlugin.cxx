@@ -3,7 +3,7 @@
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
 This file was generated from UnrealBasicDDSTypes.idl
-using RTI Code Generator (rtiddsgen) version 4.3.0.7.
+using RTI Code Generator (rtiddsgen) version 4.6.0.
 The rtiddsgen tool is part of the RTI Connext DDS distribution.
 For more information, type 'rtiddsgen -help' at a command shell
 or consult the Code Generator User's Manual.
@@ -71,7 +71,7 @@ Support functions:
 
 Position*
 PositionPluginSupport_create_data_w_params(
-    const struct DDS_TypeAllocationParams_t * alloc_params) 
+    const struct DDS_TypeAllocationParams_t * alloc_params)
 {
     Position *sample = NULL;
 
@@ -102,8 +102,8 @@ PositionPluginSupport_create_data_w_params(
         /* coverity[uninit_use_in_call : FALSE] */
         /* coverity[overwrite_var : FALSE] */
         Position_finalize_w_params(sample, &deallocParams);
-        /* Coverity reports a possible leaked_storage on the sample members when 
-        freeing sample. It is a false positive since all the members' memory 
+        /* Coverity reports a possible leaked_storage on the sample members when
+        freeing sample. It is a false positive since all the members' memory
         is freed in the call "Position_finalize_ex" */
         /* coverity[leaked_storage : FALSE] */
         delete  sample;
@@ -113,7 +113,7 @@ PositionPluginSupport_create_data_w_params(
 }
 
 Position *
-PositionPluginSupport_create_data_ex(RTIBool allocate_pointers) 
+PositionPluginSupport_create_data_ex(RTIBool allocate_pointers)
 {
     Position *sample = NULL;
 
@@ -134,8 +134,8 @@ PositionPluginSupport_create_data_ex(RTIBool allocate_pointers)
         /* coverity[uninit_use_in_call : FALSE] */
         /* coverity[overwrite_var : FALSE] */
         Position_finalize_ex(sample, RTI_TRUE);
-        /* Coverity reports a possible leaked_storage on the sample members when 
-        freeing sample. It is a false positive since all the members' memory 
+        /* Coverity reports a possible leaked_storage on the sample members when
+        freeing sample. It is a false positive since all the members' memory
         is freed in the call "Position_finalize_ex" */
         /* coverity[leaked_storage : FALSE] */
         delete  sample;
@@ -145,13 +145,19 @@ PositionPluginSupport_create_data_ex(RTIBool allocate_pointers)
     return sample;
 }
 
-Position *
-PositionPluginSupport_create_data(void)
+void *
+PositionPluginSupport_create_dataI(void)
 {
     return PositionPluginSupport_create_data_ex(RTI_TRUE);
 }
 
-void 
+Position *
+PositionPluginSupport_create_data(void)
+{
+    return (Position *) PositionPluginSupport_create_dataI();
+}
+
+void
 PositionPluginSupport_destroy_data_w_params(
     Position *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params) {
@@ -160,7 +166,7 @@ PositionPluginSupport_destroy_data_w_params(
     delete  sample;
 }
 
-void 
+void
 PositionPluginSupport_destroy_data_ex(
     Position *sample,RTIBool deallocate_pointers) {
     Position_finalize_ex(sample,deallocate_pointers);
@@ -168,7 +174,7 @@ PositionPluginSupport_destroy_data_ex(
     delete  sample;
 }
 
-void 
+void
 PositionPluginSupport_destroy_data(
     Position *sample) {
 
@@ -176,7 +182,14 @@ PositionPluginSupport_destroy_data(
 
 }
 
-RTIBool 
+void
+PositionPluginSupport_destroy_dataI(
+    void *sample)
+{
+    PositionPluginSupport_destroy_data((Position *) sample);
+}
+
+RTIBool
 PositionPluginSupport_copy_data(
     Position *dst,
     const Position *src)
@@ -184,7 +197,7 @@ PositionPluginSupport_copy_data(
     return Position_copy(dst,(const Position*) src);
 }
 
-void 
+void
 PositionPluginSupport_print_data(
     const Position *sample,
     const char *desc,
@@ -205,13 +218,19 @@ PositionPluginSupport_print_data(
     }
 
     RTICdrType_printDouble(
-        &sample->x, "x", indent_level + 1);    
+        &sample->x,
+        "x",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
     RTICdrType_printDouble(
-        &sample->y, "y", indent_level + 1);    
+        &sample->y,
+        "y",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
     RTICdrType_printDouble(
-        &sample->z, "z", indent_level + 1);    
+        &sample->z,
+        "z",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
 }
 
@@ -219,7 +238,7 @@ PositionPluginSupport_print_data(
 Callback functions:
 * ---------------------------------------------------------------------------- */
 
-RTIBool 
+RTIBool
 PositionPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
     Position *dst,
@@ -232,7 +251,7 @@ PositionPlugin_copy_sample(
 /* ----------------------------------------------------------------------------
 (De)Serialize functions:
 * ------------------------------------------------------------------------- */
-unsigned int 
+unsigned int
 PositionPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -273,20 +292,20 @@ PositionPlugin_serialize_to_cdr_buffer_ex(
 
     encapsulationId = DDS_TypeCode_get_native_encapsulation(
         (DDS_TypeCode *) plugin.typeCode,
-        representation);    
+        representation);
     if (encapsulationId == RTI_CDR_ENCAPSULATION_ID_INVALID) {
         return RTI_FALSE;
     }
 
     epd._maxSizeSerializedSample =
     PositionPlugin_get_serialized_sample_max_size(
-        (PRESTypePluginEndpointData)&epd, 
-        RTI_TRUE, 
+        (PRESTypePluginEndpointData)&epd,
+        RTI_TRUE,
         encapsulationId,
         0);
 
     if (buffer == NULL) {
-        *length = 
+        *length =
         PRESTypePlugin_interpretedGetSerializedSampleSize(
             (PRESTypePluginEndpointData)&epd,
             RTI_TRUE,
@@ -299,7 +318,7 @@ PositionPlugin_serialize_to_cdr_buffer_ex(
         }
 
         return RTI_TRUE;
-    }    
+    }
 
     RTICdrStream_init(&cdrStream);
     RTICdrStream_set(&cdrStream, (char *)buffer, *length);
@@ -360,7 +379,7 @@ PositionPlugin_deserialize_from_cdr_buffer(
     RTICdrStream_set(&cdrStream, (char *)buffer, length);
 
     Position_finalize_optional_members(sample, RTI_TRUE);
-    return PRESTypePlugin_interpretedDeserialize( 
+    return PRESTypePlugin_interpretedDeserialize(
         (PRESTypePluginEndpointData)&epd, sample,
         &cdrStream, RTI_TRUE, RTI_TRUE,
         NULL);
@@ -371,7 +390,7 @@ DDS_ReturnCode_t
 PositionPlugin_data_to_string(
     const Position *sample,
     char *_str,
-    DDS_UnsignedLong *str_size, 
+    DDS_UnsignedLong *str_size,
     const struct DDS_PrintFormatProperty *property)
 {
     DDS_DynamicData *data = NULL;
@@ -392,8 +411,8 @@ PositionPlugin_data_to_string(
         return DDS_RETCODE_BAD_PARAMETER;
     }
     if (!PositionPlugin_serialize_to_cdr_buffer(
-        NULL, 
-        &length, 
+        NULL,
+        &length,
         sample)) {
         return DDS_RETCODE_ERROR;
     }
@@ -404,14 +423,14 @@ PositionPlugin_data_to_string(
     }
 
     if (!PositionPlugin_serialize_to_cdr_buffer(
-        buffer, 
-        &length, 
+        buffer,
+        &length,
         sample)) {
         RTIOsapiHeap_freeBuffer(buffer);
         return DDS_RETCODE_ERROR;
     }
     data = DDS_DynamicData_new(
-        Position_get_typecode(), 
+        Position_get_typecode(),
         &DDS_DYNAMIC_DATA_PROPERTY_DEFAULT);
     if (data == NULL) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -426,7 +445,7 @@ PositionPlugin_data_to_string(
     }
 
     retCode = DDS_PrintFormatProperty_to_print_format(
-        property, 
+        property,
         &printFormat);
     if (retCode != DDS_RETCODE_OK) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -435,9 +454,9 @@ PositionPlugin_data_to_string(
     }
 
     retCode = DDS_DynamicDataFormatter_to_string_w_format(
-        data, 
+        data,
         _str,
-        str_size, 
+        str_size,
         &printFormat);
     if (retCode != DDS_RETCODE_OK) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -451,7 +470,7 @@ PositionPlugin_data_to_string(
 }
 #endif
 
-unsigned int 
+unsigned int
 PositionPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -475,7 +494,7 @@ PositionPlugin_get_serialized_sample_max_size(
 Key Management functions:
 * -------------------------------------------------------------------------------------- */
 
-PRESTypePluginKeyKind 
+PRESTypePluginKeyKind
 PositionPlugin_get_key_kind(void)
 {
     return PRES_TYPEPLUGIN_NO_KEY;
@@ -483,7 +502,7 @@ PositionPlugin_get_key_kind(void)
 
 RTIBool PositionPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    Position **sample, 
+    Position **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *cdrStream,
     RTIBool deserialize_encapsulation,
@@ -504,7 +523,7 @@ RTIBool PositionPlugin_deserialize_key(
         deserialize_encapsulation,
         deserialize_key,
         endpoint_plugin_qos);
-    return result;    
+    return result;
 
 }
 
@@ -548,8 +567,11 @@ PositionPlugin_get_serialized_key_max_size_for_keyhash(
 
 struct RTIXCdrInterpreterPrograms * PositionPlugin_get_programs(void)
 {
+    if (!RTIXCdrXTypesComplianceMask_verifyGeneratedXTypesMask(0x0000018C)) {
+        return NULL;
+    }
     return ::rti::xcdr::get_cdr_serialization_programs<
-    Position, 
+    Position,
     true, true, true>();
 }
 
@@ -567,7 +589,7 @@ Support functions:
 
 Velocity*
 VelocityPluginSupport_create_data_w_params(
-    const struct DDS_TypeAllocationParams_t * alloc_params) 
+    const struct DDS_TypeAllocationParams_t * alloc_params)
 {
     Velocity *sample = NULL;
 
@@ -598,8 +620,8 @@ VelocityPluginSupport_create_data_w_params(
         /* coverity[uninit_use_in_call : FALSE] */
         /* coverity[overwrite_var : FALSE] */
         Velocity_finalize_w_params(sample, &deallocParams);
-        /* Coverity reports a possible leaked_storage on the sample members when 
-        freeing sample. It is a false positive since all the members' memory 
+        /* Coverity reports a possible leaked_storage on the sample members when
+        freeing sample. It is a false positive since all the members' memory
         is freed in the call "Velocity_finalize_ex" */
         /* coverity[leaked_storage : FALSE] */
         delete  sample;
@@ -609,7 +631,7 @@ VelocityPluginSupport_create_data_w_params(
 }
 
 Velocity *
-VelocityPluginSupport_create_data_ex(RTIBool allocate_pointers) 
+VelocityPluginSupport_create_data_ex(RTIBool allocate_pointers)
 {
     Velocity *sample = NULL;
 
@@ -630,8 +652,8 @@ VelocityPluginSupport_create_data_ex(RTIBool allocate_pointers)
         /* coverity[uninit_use_in_call : FALSE] */
         /* coverity[overwrite_var : FALSE] */
         Velocity_finalize_ex(sample, RTI_TRUE);
-        /* Coverity reports a possible leaked_storage on the sample members when 
-        freeing sample. It is a false positive since all the members' memory 
+        /* Coverity reports a possible leaked_storage on the sample members when
+        freeing sample. It is a false positive since all the members' memory
         is freed in the call "Velocity_finalize_ex" */
         /* coverity[leaked_storage : FALSE] */
         delete  sample;
@@ -641,13 +663,19 @@ VelocityPluginSupport_create_data_ex(RTIBool allocate_pointers)
     return sample;
 }
 
-Velocity *
-VelocityPluginSupport_create_data(void)
+void *
+VelocityPluginSupport_create_dataI(void)
 {
     return VelocityPluginSupport_create_data_ex(RTI_TRUE);
 }
 
-void 
+Velocity *
+VelocityPluginSupport_create_data(void)
+{
+    return (Velocity *) VelocityPluginSupport_create_dataI();
+}
+
+void
 VelocityPluginSupport_destroy_data_w_params(
     Velocity *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params) {
@@ -656,7 +684,7 @@ VelocityPluginSupport_destroy_data_w_params(
     delete  sample;
 }
 
-void 
+void
 VelocityPluginSupport_destroy_data_ex(
     Velocity *sample,RTIBool deallocate_pointers) {
     Velocity_finalize_ex(sample,deallocate_pointers);
@@ -664,7 +692,7 @@ VelocityPluginSupport_destroy_data_ex(
     delete  sample;
 }
 
-void 
+void
 VelocityPluginSupport_destroy_data(
     Velocity *sample) {
 
@@ -672,7 +700,14 @@ VelocityPluginSupport_destroy_data(
 
 }
 
-RTIBool 
+void
+VelocityPluginSupport_destroy_dataI(
+    void *sample)
+{
+    VelocityPluginSupport_destroy_data((Velocity *) sample);
+}
+
+RTIBool
 VelocityPluginSupport_copy_data(
     Velocity *dst,
     const Velocity *src)
@@ -680,7 +715,7 @@ VelocityPluginSupport_copy_data(
     return Velocity_copy(dst,(const Velocity*) src);
 }
 
-void 
+void
 VelocityPluginSupport_print_data(
     const Velocity *sample,
     const char *desc,
@@ -701,13 +736,19 @@ VelocityPluginSupport_print_data(
     }
 
     RTICdrType_printDouble(
-        &sample->x, "x", indent_level + 1);    
+        &sample->x,
+        "x",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
     RTICdrType_printDouble(
-        &sample->y, "y", indent_level + 1);    
+        &sample->y,
+        "y",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
     RTICdrType_printDouble(
-        &sample->z, "z", indent_level + 1);    
+        &sample->z,
+        "z",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
 }
 
@@ -715,7 +756,7 @@ VelocityPluginSupport_print_data(
 Callback functions:
 * ---------------------------------------------------------------------------- */
 
-RTIBool 
+RTIBool
 VelocityPlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
     Velocity *dst,
@@ -728,7 +769,7 @@ VelocityPlugin_copy_sample(
 /* ----------------------------------------------------------------------------
 (De)Serialize functions:
 * ------------------------------------------------------------------------- */
-unsigned int 
+unsigned int
 VelocityPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -769,20 +810,20 @@ VelocityPlugin_serialize_to_cdr_buffer_ex(
 
     encapsulationId = DDS_TypeCode_get_native_encapsulation(
         (DDS_TypeCode *) plugin.typeCode,
-        representation);    
+        representation);
     if (encapsulationId == RTI_CDR_ENCAPSULATION_ID_INVALID) {
         return RTI_FALSE;
     }
 
     epd._maxSizeSerializedSample =
     VelocityPlugin_get_serialized_sample_max_size(
-        (PRESTypePluginEndpointData)&epd, 
-        RTI_TRUE, 
+        (PRESTypePluginEndpointData)&epd,
+        RTI_TRUE,
         encapsulationId,
         0);
 
     if (buffer == NULL) {
-        *length = 
+        *length =
         PRESTypePlugin_interpretedGetSerializedSampleSize(
             (PRESTypePluginEndpointData)&epd,
             RTI_TRUE,
@@ -795,7 +836,7 @@ VelocityPlugin_serialize_to_cdr_buffer_ex(
         }
 
         return RTI_TRUE;
-    }    
+    }
 
     RTICdrStream_init(&cdrStream);
     RTICdrStream_set(&cdrStream, (char *)buffer, *length);
@@ -856,7 +897,7 @@ VelocityPlugin_deserialize_from_cdr_buffer(
     RTICdrStream_set(&cdrStream, (char *)buffer, length);
 
     Velocity_finalize_optional_members(sample, RTI_TRUE);
-    return PRESTypePlugin_interpretedDeserialize( 
+    return PRESTypePlugin_interpretedDeserialize(
         (PRESTypePluginEndpointData)&epd, sample,
         &cdrStream, RTI_TRUE, RTI_TRUE,
         NULL);
@@ -867,7 +908,7 @@ DDS_ReturnCode_t
 VelocityPlugin_data_to_string(
     const Velocity *sample,
     char *_str,
-    DDS_UnsignedLong *str_size, 
+    DDS_UnsignedLong *str_size,
     const struct DDS_PrintFormatProperty *property)
 {
     DDS_DynamicData *data = NULL;
@@ -888,8 +929,8 @@ VelocityPlugin_data_to_string(
         return DDS_RETCODE_BAD_PARAMETER;
     }
     if (!VelocityPlugin_serialize_to_cdr_buffer(
-        NULL, 
-        &length, 
+        NULL,
+        &length,
         sample)) {
         return DDS_RETCODE_ERROR;
     }
@@ -900,14 +941,14 @@ VelocityPlugin_data_to_string(
     }
 
     if (!VelocityPlugin_serialize_to_cdr_buffer(
-        buffer, 
-        &length, 
+        buffer,
+        &length,
         sample)) {
         RTIOsapiHeap_freeBuffer(buffer);
         return DDS_RETCODE_ERROR;
     }
     data = DDS_DynamicData_new(
-        Velocity_get_typecode(), 
+        Velocity_get_typecode(),
         &DDS_DYNAMIC_DATA_PROPERTY_DEFAULT);
     if (data == NULL) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -922,7 +963,7 @@ VelocityPlugin_data_to_string(
     }
 
     retCode = DDS_PrintFormatProperty_to_print_format(
-        property, 
+        property,
         &printFormat);
     if (retCode != DDS_RETCODE_OK) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -931,9 +972,9 @@ VelocityPlugin_data_to_string(
     }
 
     retCode = DDS_DynamicDataFormatter_to_string_w_format(
-        data, 
+        data,
         _str,
-        str_size, 
+        str_size,
         &printFormat);
     if (retCode != DDS_RETCODE_OK) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -947,7 +988,7 @@ VelocityPlugin_data_to_string(
 }
 #endif
 
-unsigned int 
+unsigned int
 VelocityPlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -971,7 +1012,7 @@ VelocityPlugin_get_serialized_sample_max_size(
 Key Management functions:
 * -------------------------------------------------------------------------------------- */
 
-PRESTypePluginKeyKind 
+PRESTypePluginKeyKind
 VelocityPlugin_get_key_kind(void)
 {
     return PRES_TYPEPLUGIN_NO_KEY;
@@ -979,7 +1020,7 @@ VelocityPlugin_get_key_kind(void)
 
 RTIBool VelocityPlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    Velocity **sample, 
+    Velocity **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *cdrStream,
     RTIBool deserialize_encapsulation,
@@ -1000,7 +1041,7 @@ RTIBool VelocityPlugin_deserialize_key(
         deserialize_encapsulation,
         deserialize_key,
         endpoint_plugin_qos);
-    return result;    
+    return result;
 
 }
 
@@ -1044,8 +1085,11 @@ VelocityPlugin_get_serialized_key_max_size_for_keyhash(
 
 struct RTIXCdrInterpreterPrograms * VelocityPlugin_get_programs(void)
 {
+    if (!RTIXCdrXTypesComplianceMask_verifyGeneratedXTypesMask(0x0000018C)) {
+        return NULL;
+    }
     return ::rti::xcdr::get_cdr_serialization_programs<
-    Velocity, 
+    Velocity,
     true, true, true>();
 }
 
@@ -1063,7 +1107,7 @@ Support functions:
 
 Attitude*
 AttitudePluginSupport_create_data_w_params(
-    const struct DDS_TypeAllocationParams_t * alloc_params) 
+    const struct DDS_TypeAllocationParams_t * alloc_params)
 {
     Attitude *sample = NULL;
 
@@ -1094,8 +1138,8 @@ AttitudePluginSupport_create_data_w_params(
         /* coverity[uninit_use_in_call : FALSE] */
         /* coverity[overwrite_var : FALSE] */
         Attitude_finalize_w_params(sample, &deallocParams);
-        /* Coverity reports a possible leaked_storage on the sample members when 
-        freeing sample. It is a false positive since all the members' memory 
+        /* Coverity reports a possible leaked_storage on the sample members when
+        freeing sample. It is a false positive since all the members' memory
         is freed in the call "Attitude_finalize_ex" */
         /* coverity[leaked_storage : FALSE] */
         delete  sample;
@@ -1105,7 +1149,7 @@ AttitudePluginSupport_create_data_w_params(
 }
 
 Attitude *
-AttitudePluginSupport_create_data_ex(RTIBool allocate_pointers) 
+AttitudePluginSupport_create_data_ex(RTIBool allocate_pointers)
 {
     Attitude *sample = NULL;
 
@@ -1126,8 +1170,8 @@ AttitudePluginSupport_create_data_ex(RTIBool allocate_pointers)
         /* coverity[uninit_use_in_call : FALSE] */
         /* coverity[overwrite_var : FALSE] */
         Attitude_finalize_ex(sample, RTI_TRUE);
-        /* Coverity reports a possible leaked_storage on the sample members when 
-        freeing sample. It is a false positive since all the members' memory 
+        /* Coverity reports a possible leaked_storage on the sample members when
+        freeing sample. It is a false positive since all the members' memory
         is freed in the call "Attitude_finalize_ex" */
         /* coverity[leaked_storage : FALSE] */
         delete  sample;
@@ -1137,13 +1181,19 @@ AttitudePluginSupport_create_data_ex(RTIBool allocate_pointers)
     return sample;
 }
 
-Attitude *
-AttitudePluginSupport_create_data(void)
+void *
+AttitudePluginSupport_create_dataI(void)
 {
     return AttitudePluginSupport_create_data_ex(RTI_TRUE);
 }
 
-void 
+Attitude *
+AttitudePluginSupport_create_data(void)
+{
+    return (Attitude *) AttitudePluginSupport_create_dataI();
+}
+
+void
 AttitudePluginSupport_destroy_data_w_params(
     Attitude *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params) {
@@ -1152,7 +1202,7 @@ AttitudePluginSupport_destroy_data_w_params(
     delete  sample;
 }
 
-void 
+void
 AttitudePluginSupport_destroy_data_ex(
     Attitude *sample,RTIBool deallocate_pointers) {
     Attitude_finalize_ex(sample,deallocate_pointers);
@@ -1160,7 +1210,7 @@ AttitudePluginSupport_destroy_data_ex(
     delete  sample;
 }
 
-void 
+void
 AttitudePluginSupport_destroy_data(
     Attitude *sample) {
 
@@ -1168,7 +1218,14 @@ AttitudePluginSupport_destroy_data(
 
 }
 
-RTIBool 
+void
+AttitudePluginSupport_destroy_dataI(
+    void *sample)
+{
+    AttitudePluginSupport_destroy_data((Attitude *) sample);
+}
+
+RTIBool
 AttitudePluginSupport_copy_data(
     Attitude *dst,
     const Attitude *src)
@@ -1176,7 +1233,7 @@ AttitudePluginSupport_copy_data(
     return Attitude_copy(dst,(const Attitude*) src);
 }
 
-void 
+void
 AttitudePluginSupport_print_data(
     const Attitude *sample,
     const char *desc,
@@ -1197,13 +1254,19 @@ AttitudePluginSupport_print_data(
     }
 
     RTICdrType_printDouble(
-        &sample->roll, "roll", indent_level + 1);    
+        &sample->roll,
+        "roll",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
     RTICdrType_printDouble(
-        &sample->pitch, "pitch", indent_level + 1);    
+        &sample->pitch,
+        "pitch",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
     RTICdrType_printDouble(
-        &sample->yaw, "yaw", indent_level + 1);    
+        &sample->yaw,
+        "yaw",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
 }
 
@@ -1211,7 +1274,7 @@ AttitudePluginSupport_print_data(
 Callback functions:
 * ---------------------------------------------------------------------------- */
 
-RTIBool 
+RTIBool
 AttitudePlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
     Attitude *dst,
@@ -1224,7 +1287,7 @@ AttitudePlugin_copy_sample(
 /* ----------------------------------------------------------------------------
 (De)Serialize functions:
 * ------------------------------------------------------------------------- */
-unsigned int 
+unsigned int
 AttitudePlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -1265,20 +1328,20 @@ AttitudePlugin_serialize_to_cdr_buffer_ex(
 
     encapsulationId = DDS_TypeCode_get_native_encapsulation(
         (DDS_TypeCode *) plugin.typeCode,
-        representation);    
+        representation);
     if (encapsulationId == RTI_CDR_ENCAPSULATION_ID_INVALID) {
         return RTI_FALSE;
     }
 
     epd._maxSizeSerializedSample =
     AttitudePlugin_get_serialized_sample_max_size(
-        (PRESTypePluginEndpointData)&epd, 
-        RTI_TRUE, 
+        (PRESTypePluginEndpointData)&epd,
+        RTI_TRUE,
         encapsulationId,
         0);
 
     if (buffer == NULL) {
-        *length = 
+        *length =
         PRESTypePlugin_interpretedGetSerializedSampleSize(
             (PRESTypePluginEndpointData)&epd,
             RTI_TRUE,
@@ -1291,7 +1354,7 @@ AttitudePlugin_serialize_to_cdr_buffer_ex(
         }
 
         return RTI_TRUE;
-    }    
+    }
 
     RTICdrStream_init(&cdrStream);
     RTICdrStream_set(&cdrStream, (char *)buffer, *length);
@@ -1352,7 +1415,7 @@ AttitudePlugin_deserialize_from_cdr_buffer(
     RTICdrStream_set(&cdrStream, (char *)buffer, length);
 
     Attitude_finalize_optional_members(sample, RTI_TRUE);
-    return PRESTypePlugin_interpretedDeserialize( 
+    return PRESTypePlugin_interpretedDeserialize(
         (PRESTypePluginEndpointData)&epd, sample,
         &cdrStream, RTI_TRUE, RTI_TRUE,
         NULL);
@@ -1363,7 +1426,7 @@ DDS_ReturnCode_t
 AttitudePlugin_data_to_string(
     const Attitude *sample,
     char *_str,
-    DDS_UnsignedLong *str_size, 
+    DDS_UnsignedLong *str_size,
     const struct DDS_PrintFormatProperty *property)
 {
     DDS_DynamicData *data = NULL;
@@ -1384,8 +1447,8 @@ AttitudePlugin_data_to_string(
         return DDS_RETCODE_BAD_PARAMETER;
     }
     if (!AttitudePlugin_serialize_to_cdr_buffer(
-        NULL, 
-        &length, 
+        NULL,
+        &length,
         sample)) {
         return DDS_RETCODE_ERROR;
     }
@@ -1396,14 +1459,14 @@ AttitudePlugin_data_to_string(
     }
 
     if (!AttitudePlugin_serialize_to_cdr_buffer(
-        buffer, 
-        &length, 
+        buffer,
+        &length,
         sample)) {
         RTIOsapiHeap_freeBuffer(buffer);
         return DDS_RETCODE_ERROR;
     }
     data = DDS_DynamicData_new(
-        Attitude_get_typecode(), 
+        Attitude_get_typecode(),
         &DDS_DYNAMIC_DATA_PROPERTY_DEFAULT);
     if (data == NULL) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -1418,7 +1481,7 @@ AttitudePlugin_data_to_string(
     }
 
     retCode = DDS_PrintFormatProperty_to_print_format(
-        property, 
+        property,
         &printFormat);
     if (retCode != DDS_RETCODE_OK) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -1427,9 +1490,9 @@ AttitudePlugin_data_to_string(
     }
 
     retCode = DDS_DynamicDataFormatter_to_string_w_format(
-        data, 
+        data,
         _str,
-        str_size, 
+        str_size,
         &printFormat);
     if (retCode != DDS_RETCODE_OK) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -1443,7 +1506,7 @@ AttitudePlugin_data_to_string(
 }
 #endif
 
-unsigned int 
+unsigned int
 AttitudePlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -1467,7 +1530,7 @@ AttitudePlugin_get_serialized_sample_max_size(
 Key Management functions:
 * -------------------------------------------------------------------------------------- */
 
-PRESTypePluginKeyKind 
+PRESTypePluginKeyKind
 AttitudePlugin_get_key_kind(void)
 {
     return PRES_TYPEPLUGIN_NO_KEY;
@@ -1475,7 +1538,7 @@ AttitudePlugin_get_key_kind(void)
 
 RTIBool AttitudePlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    Attitude **sample, 
+    Attitude **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *cdrStream,
     RTIBool deserialize_encapsulation,
@@ -1496,7 +1559,7 @@ RTIBool AttitudePlugin_deserialize_key(
         deserialize_encapsulation,
         deserialize_key,
         endpoint_plugin_qos);
-    return result;    
+    return result;
 
 }
 
@@ -1540,8 +1603,11 @@ AttitudePlugin_get_serialized_key_max_size_for_keyhash(
 
 struct RTIXCdrInterpreterPrograms * AttitudePlugin_get_programs(void)
 {
+    if (!RTIXCdrXTypesComplianceMask_verifyGeneratedXTypesMask(0x0000018C)) {
+        return NULL;
+    }
     return ::rti::xcdr::get_cdr_serialization_programs<
-    Attitude, 
+    Attitude,
     true, true, true>();
 }
 
@@ -1559,7 +1625,7 @@ Support functions:
 
 AActorType*
 AActorTypePluginSupport_create_data_w_params(
-    const struct DDS_TypeAllocationParams_t * alloc_params) 
+    const struct DDS_TypeAllocationParams_t * alloc_params)
 {
     AActorType *sample = NULL;
 
@@ -1590,8 +1656,8 @@ AActorTypePluginSupport_create_data_w_params(
         /* coverity[uninit_use_in_call : FALSE] */
         /* coverity[overwrite_var : FALSE] */
         AActorType_finalize_w_params(sample, &deallocParams);
-        /* Coverity reports a possible leaked_storage on the sample members when 
-        freeing sample. It is a false positive since all the members' memory 
+        /* Coverity reports a possible leaked_storage on the sample members when
+        freeing sample. It is a false positive since all the members' memory
         is freed in the call "AActorType_finalize_ex" */
         /* coverity[leaked_storage : FALSE] */
         delete  sample;
@@ -1601,7 +1667,7 @@ AActorTypePluginSupport_create_data_w_params(
 }
 
 AActorType *
-AActorTypePluginSupport_create_data_ex(RTIBool allocate_pointers) 
+AActorTypePluginSupport_create_data_ex(RTIBool allocate_pointers)
 {
     AActorType *sample = NULL;
 
@@ -1622,8 +1688,8 @@ AActorTypePluginSupport_create_data_ex(RTIBool allocate_pointers)
         /* coverity[uninit_use_in_call : FALSE] */
         /* coverity[overwrite_var : FALSE] */
         AActorType_finalize_ex(sample, RTI_TRUE);
-        /* Coverity reports a possible leaked_storage on the sample members when 
-        freeing sample. It is a false positive since all the members' memory 
+        /* Coverity reports a possible leaked_storage on the sample members when
+        freeing sample. It is a false positive since all the members' memory
         is freed in the call "AActorType_finalize_ex" */
         /* coverity[leaked_storage : FALSE] */
         delete  sample;
@@ -1633,13 +1699,19 @@ AActorTypePluginSupport_create_data_ex(RTIBool allocate_pointers)
     return sample;
 }
 
-AActorType *
-AActorTypePluginSupport_create_data(void)
+void *
+AActorTypePluginSupport_create_dataI(void)
 {
     return AActorTypePluginSupport_create_data_ex(RTI_TRUE);
 }
 
-void 
+AActorType *
+AActorTypePluginSupport_create_data(void)
+{
+    return (AActorType *) AActorTypePluginSupport_create_dataI();
+}
+
+void
 AActorTypePluginSupport_destroy_data_w_params(
     AActorType *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params) {
@@ -1648,7 +1720,7 @@ AActorTypePluginSupport_destroy_data_w_params(
     delete  sample;
 }
 
-void 
+void
 AActorTypePluginSupport_destroy_data_ex(
     AActorType *sample,RTIBool deallocate_pointers) {
     AActorType_finalize_ex(sample,deallocate_pointers);
@@ -1656,7 +1728,7 @@ AActorTypePluginSupport_destroy_data_ex(
     delete  sample;
 }
 
-void 
+void
 AActorTypePluginSupport_destroy_data(
     AActorType *sample) {
 
@@ -1664,7 +1736,14 @@ AActorTypePluginSupport_destroy_data(
 
 }
 
-RTIBool 
+void
+AActorTypePluginSupport_destroy_dataI(
+    void *sample)
+{
+    AActorTypePluginSupport_destroy_data((AActorType *) sample);
+}
+
+RTIBool
 AActorTypePluginSupport_copy_data(
     AActorType *dst,
     const AActorType *src)
@@ -1672,7 +1751,7 @@ AActorTypePluginSupport_copy_data(
     return AActorType_copy(dst,(const AActorType*) src);
 }
 
-void 
+void
 AActorTypePluginSupport_print_data(
     const AActorType *sample,
     const char *desc,
@@ -1693,13 +1772,19 @@ AActorTypePluginSupport_print_data(
     }
 
     PositionPluginSupport_print_data(
-        (const Position*) &sample->pos, "pos", indent_level + 1);
+        (const Position*) &sample->pos,
+        "pos",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
     VelocityPluginSupport_print_data(
-        (const Velocity*) &sample->vel, "vel", indent_level + 1);
+        (const Velocity*) &sample->vel,
+        "vel",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
     AttitudePluginSupport_print_data(
-        (const Attitude*) &sample->rot, "rot", indent_level + 1);
+        (const Attitude*) &sample->rot,
+        "rot",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
 }
 
@@ -1707,7 +1792,7 @@ AActorTypePluginSupport_print_data(
 Callback functions:
 * ---------------------------------------------------------------------------- */
 
-PRESTypePluginParticipantData 
+PRESTypePluginParticipantData
 AActorTypePlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
@@ -1725,6 +1810,10 @@ AActorTypePlugin_on_participant_attached(
     if (top_level_registration) {} /* To avoid warnings */
     if (container_plugin_context) {} /* To avoid warnings */
     if (type_code) {} /* To avoid warnings */
+
+    if (!RTIXCdrXTypesComplianceMask_verifyGeneratedXTypesMask(0x0000018C)) {
+        return NULL;
+    }
 
     pd = (struct PRESTypePluginDefaultParticipantData *)
     PRESTypePluginDefaultParticipantData_new(participant_info);
@@ -1751,12 +1840,12 @@ AActorTypePlugin_on_participant_attached(
     return (PRESTypePluginParticipantData)pd;
 }
 
-void 
+void
 AActorTypePlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
-{  		
+{
     if (participant_data != NULL) {
-        struct PRESTypePluginDefaultParticipantData *pd = 
+        struct PRESTypePluginDefaultParticipantData *pd =
         (struct PRESTypePluginDefaultParticipantData *)participant_data;
 
         if (pd->programs != NULL) {
@@ -1773,7 +1862,7 @@ PRESTypePluginEndpointData
 AActorTypePlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
-    RTIBool top_level_registration, 
+    RTIBool top_level_registration,
     void *containerPluginContext)
 {
     PRESTypePluginEndpointData epd = NULL;
@@ -1784,20 +1873,18 @@ AActorTypePlugin_on_endpoint_attached(
 
     if (participant_data == NULL) {
         return NULL;
-    } 
+    }
 
     epd = PRESTypePluginDefaultEndpointData_new(
         participant_data,
         endpoint_info,
-        (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-        AActorTypePluginSupport_create_data,
-        (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-        AActorTypePluginSupport_destroy_data,
+        AActorTypePluginSupport_create_dataI,
+        AActorTypePluginSupport_destroy_dataI,
         NULL , NULL );
 
     if (epd == NULL) {
         return NULL;
-    } 
+    }
 
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
         serializedSampleMaxSize = AActorTypePlugin_get_serialized_sample_max_size(
@@ -1817,17 +1904,17 @@ AActorTypePlugin_on_endpoint_attached(
         }
     }
 
-    return epd;    
+    return epd;
 }
 
-void 
+void
 AActorTypePlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
 
-void    
+void
 AActorTypePlugin_return_sample(
     PRESTypePluginEndpointData endpoint_data,
     AActorType *sample,
@@ -1849,7 +1936,7 @@ void AActorTypePlugin_finalize_optional_members(
         sample, deletePointers);
 }
 
-RTIBool 
+RTIBool
 AActorTypePlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
     AActorType *dst,
@@ -1862,7 +1949,7 @@ AActorTypePlugin_copy_sample(
 /* ----------------------------------------------------------------------------
 (De)Serialize functions:
 * ------------------------------------------------------------------------- */
-unsigned int 
+unsigned int
 AActorTypePlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -1903,20 +1990,20 @@ AActorTypePlugin_serialize_to_cdr_buffer_ex(
 
     encapsulationId = DDS_TypeCode_get_native_encapsulation(
         (DDS_TypeCode *) plugin.typeCode,
-        representation);    
+        representation);
     if (encapsulationId == RTI_CDR_ENCAPSULATION_ID_INVALID) {
         return RTI_FALSE;
     }
 
     epd._maxSizeSerializedSample =
     AActorTypePlugin_get_serialized_sample_max_size(
-        (PRESTypePluginEndpointData)&epd, 
-        RTI_TRUE, 
+        (PRESTypePluginEndpointData)&epd,
+        RTI_TRUE,
         encapsulationId,
         0);
 
     if (buffer == NULL) {
-        *length = 
+        *length =
         PRESTypePlugin_interpretedGetSerializedSampleSize(
             (PRESTypePluginEndpointData)&epd,
             RTI_TRUE,
@@ -1929,7 +2016,7 @@ AActorTypePlugin_serialize_to_cdr_buffer_ex(
         }
 
         return RTI_TRUE;
-    }    
+    }
 
     RTICdrStream_init(&cdrStream);
     RTICdrStream_set(&cdrStream, (char *)buffer, *length);
@@ -1990,7 +2077,7 @@ AActorTypePlugin_deserialize_from_cdr_buffer(
     RTICdrStream_set(&cdrStream, (char *)buffer, length);
 
     AActorType_finalize_optional_members(sample, RTI_TRUE);
-    return PRESTypePlugin_interpretedDeserialize( 
+    return PRESTypePlugin_interpretedDeserialize(
         (PRESTypePluginEndpointData)&epd, sample,
         &cdrStream, RTI_TRUE, RTI_TRUE,
         NULL);
@@ -2001,7 +2088,7 @@ DDS_ReturnCode_t
 AActorTypePlugin_data_to_string(
     const AActorType *sample,
     char *_str,
-    DDS_UnsignedLong *str_size, 
+    DDS_UnsignedLong *str_size,
     const struct DDS_PrintFormatProperty *property)
 {
     DDS_DynamicData *data = NULL;
@@ -2022,8 +2109,8 @@ AActorTypePlugin_data_to_string(
         return DDS_RETCODE_BAD_PARAMETER;
     }
     if (!AActorTypePlugin_serialize_to_cdr_buffer(
-        NULL, 
-        &length, 
+        NULL,
+        &length,
         sample)) {
         return DDS_RETCODE_ERROR;
     }
@@ -2034,14 +2121,14 @@ AActorTypePlugin_data_to_string(
     }
 
     if (!AActorTypePlugin_serialize_to_cdr_buffer(
-        buffer, 
-        &length, 
+        buffer,
+        &length,
         sample)) {
         RTIOsapiHeap_freeBuffer(buffer);
         return DDS_RETCODE_ERROR;
     }
     data = DDS_DynamicData_new(
-        AActorType_get_typecode(), 
+        AActorType_get_typecode(),
         &DDS_DYNAMIC_DATA_PROPERTY_DEFAULT);
     if (data == NULL) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -2056,7 +2143,7 @@ AActorTypePlugin_data_to_string(
     }
 
     retCode = DDS_PrintFormatProperty_to_print_format(
-        property, 
+        property,
         &printFormat);
     if (retCode != DDS_RETCODE_OK) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -2065,9 +2152,9 @@ AActorTypePlugin_data_to_string(
     }
 
     retCode = DDS_DynamicDataFormatter_to_string_w_format(
-        data, 
+        data,
         _str,
-        str_size, 
+        str_size,
         &printFormat);
     if (retCode != DDS_RETCODE_OK) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -2081,7 +2168,7 @@ AActorTypePlugin_data_to_string(
 }
 #endif
 
-unsigned int 
+unsigned int
 AActorTypePlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -2105,7 +2192,7 @@ AActorTypePlugin_get_serialized_sample_max_size(
 Key Management functions:
 * -------------------------------------------------------------------------------------- */
 
-PRESTypePluginKeyKind 
+PRESTypePluginKeyKind
 AActorTypePlugin_get_key_kind(void)
 {
     return PRES_TYPEPLUGIN_NO_KEY;
@@ -2113,7 +2200,7 @@ AActorTypePlugin_get_key_kind(void)
 
 RTIBool AActorTypePlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    AActorType **sample, 
+    AActorType **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *cdrStream,
     RTIBool deserialize_encapsulation,
@@ -2134,7 +2221,7 @@ RTIBool AActorTypePlugin_deserialize_key(
         deserialize_encapsulation,
         deserialize_key,
         endpoint_plugin_qos);
-    return result;    
+    return result;
 
 }
 
@@ -2178,18 +2265,21 @@ AActorTypePlugin_get_serialized_key_max_size_for_keyhash(
 
 struct RTIXCdrInterpreterPrograms * AActorTypePlugin_get_programs(void)
 {
+    if (!RTIXCdrXTypesComplianceMask_verifyGeneratedXTypesMask(0x0000018C)) {
+        return NULL;
+    }
     return ::rti::xcdr::get_cdr_serialization_programs<
-    AActorType, 
+    AActorType,
     true, true, true>();
 }
 
 /* ------------------------------------------------------------------------
 * Plug-in Installation Methods
 * ------------------------------------------------------------------------ */
-struct PRESTypePlugin *AActorTypePlugin_new(void) 
-{ 
+struct PRESTypePlugin *AActorTypePlugin_new(void)
+{
     struct PRESTypePlugin *plugin = NULL;
-    const struct PRESTypePluginVersion PLUGIN_VERSION = 
+    const struct PRESTypePluginVersion PLUGIN_VERSION =
     PRES_TYPE_PLUGIN_VERSION_2_0;
 
     RTIOsapiHeap_allocateStructure(
@@ -2228,7 +2318,7 @@ struct PRESTypePlugin *AActorTypePlugin_new(void)
     (PRESTypePluginFinalizeOptionalMembersFunction)
     AActorTypePlugin_finalize_optional_members;
 
-    plugin->serializeFnc = 
+    plugin->serializeFnc =
     (PRESTypePluginSerializeFunction) PRESTypePlugin_interpretedSerialize;
     plugin->deserializeFnc =
     (PRESTypePluginDeserializeFunction) PRESTypePlugin_interpretedDeserializeWithAlloc;
@@ -2238,7 +2328,7 @@ struct PRESTypePlugin *AActorTypePlugin_new(void)
     plugin->getSerializedSampleMinSizeFnc =
     (PRESTypePluginGetSerializedSampleMinSizeFunction)
     PRESTypePlugin_interpretedGetSerializedSampleMinSize;
-    plugin->getDeserializedSampleMaxSizeFnc = NULL; 
+    plugin->getDeserializedSampleMaxSizeFnc = NULL;
     plugin->getSampleFnc =
     (PRESTypePluginGetSampleFunction)
     AActorTypePlugin_get_sample;
@@ -2252,8 +2342,8 @@ struct PRESTypePlugin *AActorTypePlugin_new(void)
     /* These functions are only used for keyed types. As this is not a keyed
     type they are all set to NULL
     */
-    plugin->serializeKeyFnc = NULL ;    
-    plugin->deserializeKeyFnc = NULL;  
+    plugin->serializeKeyFnc = NULL ;
+    plugin->deserializeKeyFnc = NULL;
     plugin->getKeyFnc = NULL;
     plugin->returnKeyFnc = NULL;
     plugin->instanceToKeyFnc = NULL;
@@ -2261,19 +2351,19 @@ struct PRESTypePlugin *AActorTypePlugin_new(void)
     plugin->getSerializedKeyMaxSizeFnc = NULL;
     plugin->instanceToKeyHashFnc = NULL;
     plugin->serializedSampleToKeyHashFnc = NULL;
-    plugin->serializedKeyToKeyHashFnc = NULL;    
+    plugin->serializedKeyToKeyHashFnc = NULL;
     #ifdef NDDS_STANDALONE_TYPE
-    plugin->typeCode = NULL; 
+    plugin->typeCode = NULL;
     #else
     plugin->typeCode =  (struct RTICdrTypeCode *)AActorType_get_typecode();
     #endif
     plugin->languageKind = PRES_TYPEPLUGIN_CPP_LANG;
 
     /* Serialized buffer */
-    plugin->getBuffer = 
+    plugin->getBuffer =
     (PRESTypePluginGetBufferFunction)
     AActorTypePlugin_get_buffer;
-    plugin->returnBuffer = 
+    plugin->returnBuffer =
     (PRESTypePluginReturnBufferFunction)
     AActorTypePlugin_return_buffer;
     plugin->getBufferWithParams = NULL;
@@ -2282,7 +2372,7 @@ struct PRESTypePlugin *AActorTypePlugin_new(void)
     (PRESTypePluginGetSerializedSampleSizeFunction)
     PRESTypePlugin_interpretedGetSerializedSampleSize;
 
-    plugin->getWriterLoanedSampleFnc = NULL; 
+    plugin->getWriterLoanedSampleFnc = NULL;
     plugin->returnWriterLoanedSampleFnc = NULL;
     plugin->returnWriterLoanedSampleFromCookieFnc = NULL;
     plugin->validateWriterLoanedSampleFnc = NULL;
@@ -2297,7 +2387,7 @@ void
 AActorTypePlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
-} 
+}
 
 /* ----------------------------------------------------------------------------
 *  Type InputCommandType
@@ -2309,7 +2399,7 @@ Support functions:
 
 InputCommandType*
 InputCommandTypePluginSupport_create_data_w_params(
-    const struct DDS_TypeAllocationParams_t * alloc_params) 
+    const struct DDS_TypeAllocationParams_t * alloc_params)
 {
     InputCommandType *sample = NULL;
 
@@ -2340,8 +2430,8 @@ InputCommandTypePluginSupport_create_data_w_params(
         /* coverity[uninit_use_in_call : FALSE] */
         /* coverity[overwrite_var : FALSE] */
         InputCommandType_finalize_w_params(sample, &deallocParams);
-        /* Coverity reports a possible leaked_storage on the sample members when 
-        freeing sample. It is a false positive since all the members' memory 
+        /* Coverity reports a possible leaked_storage on the sample members when
+        freeing sample. It is a false positive since all the members' memory
         is freed in the call "InputCommandType_finalize_ex" */
         /* coverity[leaked_storage : FALSE] */
         delete  sample;
@@ -2351,7 +2441,7 @@ InputCommandTypePluginSupport_create_data_w_params(
 }
 
 InputCommandType *
-InputCommandTypePluginSupport_create_data_ex(RTIBool allocate_pointers) 
+InputCommandTypePluginSupport_create_data_ex(RTIBool allocate_pointers)
 {
     InputCommandType *sample = NULL;
 
@@ -2372,8 +2462,8 @@ InputCommandTypePluginSupport_create_data_ex(RTIBool allocate_pointers)
         /* coverity[uninit_use_in_call : FALSE] */
         /* coverity[overwrite_var : FALSE] */
         InputCommandType_finalize_ex(sample, RTI_TRUE);
-        /* Coverity reports a possible leaked_storage on the sample members when 
-        freeing sample. It is a false positive since all the members' memory 
+        /* Coverity reports a possible leaked_storage on the sample members when
+        freeing sample. It is a false positive since all the members' memory
         is freed in the call "InputCommandType_finalize_ex" */
         /* coverity[leaked_storage : FALSE] */
         delete  sample;
@@ -2383,13 +2473,19 @@ InputCommandTypePluginSupport_create_data_ex(RTIBool allocate_pointers)
     return sample;
 }
 
-InputCommandType *
-InputCommandTypePluginSupport_create_data(void)
+void *
+InputCommandTypePluginSupport_create_dataI(void)
 {
     return InputCommandTypePluginSupport_create_data_ex(RTI_TRUE);
 }
 
-void 
+InputCommandType *
+InputCommandTypePluginSupport_create_data(void)
+{
+    return (InputCommandType *) InputCommandTypePluginSupport_create_dataI();
+}
+
+void
 InputCommandTypePluginSupport_destroy_data_w_params(
     InputCommandType *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params) {
@@ -2398,7 +2494,7 @@ InputCommandTypePluginSupport_destroy_data_w_params(
     delete  sample;
 }
 
-void 
+void
 InputCommandTypePluginSupport_destroy_data_ex(
     InputCommandType *sample,RTIBool deallocate_pointers) {
     InputCommandType_finalize_ex(sample,deallocate_pointers);
@@ -2406,7 +2502,7 @@ InputCommandTypePluginSupport_destroy_data_ex(
     delete  sample;
 }
 
-void 
+void
 InputCommandTypePluginSupport_destroy_data(
     InputCommandType *sample) {
 
@@ -2414,7 +2510,14 @@ InputCommandTypePluginSupport_destroy_data(
 
 }
 
-RTIBool 
+void
+InputCommandTypePluginSupport_destroy_dataI(
+    void *sample)
+{
+    InputCommandTypePluginSupport_destroy_data((InputCommandType *) sample);
+}
+
+RTIBool
 InputCommandTypePluginSupport_copy_data(
     InputCommandType *dst,
     const InputCommandType *src)
@@ -2422,7 +2525,7 @@ InputCommandTypePluginSupport_copy_data(
     return InputCommandType_copy(dst,(const InputCommandType*) src);
 }
 
-void 
+void
 InputCommandTypePluginSupport_print_data(
     const InputCommandType *sample,
     const char *desc,
@@ -2443,13 +2546,19 @@ InputCommandTypePluginSupport_print_data(
     }
 
     RTICdrType_printFloat(
-        &sample->throttle, "throttle", indent_level + 1);    
+        &sample->throttle,
+        "throttle",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
     RTICdrType_printFloat(
-        &sample->steering, "steering", indent_level + 1);    
+        &sample->steering,
+        "steering",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
     RTICdrType_printFloat(
-        &sample->brake, "brake", indent_level + 1);    
+        &sample->brake,
+        "brake",
+        RTIOsapiUtility_uInt32Plus1(indent_level));
 
 }
 
@@ -2457,7 +2566,7 @@ InputCommandTypePluginSupport_print_data(
 Callback functions:
 * ---------------------------------------------------------------------------- */
 
-PRESTypePluginParticipantData 
+PRESTypePluginParticipantData
 InputCommandTypePlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
@@ -2475,6 +2584,10 @@ InputCommandTypePlugin_on_participant_attached(
     if (top_level_registration) {} /* To avoid warnings */
     if (container_plugin_context) {} /* To avoid warnings */
     if (type_code) {} /* To avoid warnings */
+
+    if (!RTIXCdrXTypesComplianceMask_verifyGeneratedXTypesMask(0x0000018C)) {
+        return NULL;
+    }
 
     pd = (struct PRESTypePluginDefaultParticipantData *)
     PRESTypePluginDefaultParticipantData_new(participant_info);
@@ -2501,12 +2614,12 @@ InputCommandTypePlugin_on_participant_attached(
     return (PRESTypePluginParticipantData)pd;
 }
 
-void 
+void
 InputCommandTypePlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
-{  		
+{
     if (participant_data != NULL) {
-        struct PRESTypePluginDefaultParticipantData *pd = 
+        struct PRESTypePluginDefaultParticipantData *pd =
         (struct PRESTypePluginDefaultParticipantData *)participant_data;
 
         if (pd->programs != NULL) {
@@ -2523,7 +2636,7 @@ PRESTypePluginEndpointData
 InputCommandTypePlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
-    RTIBool top_level_registration, 
+    RTIBool top_level_registration,
     void *containerPluginContext)
 {
     PRESTypePluginEndpointData epd = NULL;
@@ -2534,20 +2647,18 @@ InputCommandTypePlugin_on_endpoint_attached(
 
     if (participant_data == NULL) {
         return NULL;
-    } 
+    }
 
     epd = PRESTypePluginDefaultEndpointData_new(
         participant_data,
         endpoint_info,
-        (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-        InputCommandTypePluginSupport_create_data,
-        (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-        InputCommandTypePluginSupport_destroy_data,
+        InputCommandTypePluginSupport_create_dataI,
+        InputCommandTypePluginSupport_destroy_dataI,
         NULL , NULL );
 
     if (epd == NULL) {
         return NULL;
-    } 
+    }
 
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
         serializedSampleMaxSize = InputCommandTypePlugin_get_serialized_sample_max_size(
@@ -2567,17 +2678,17 @@ InputCommandTypePlugin_on_endpoint_attached(
         }
     }
 
-    return epd;    
+    return epd;
 }
 
-void 
+void
 InputCommandTypePlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {
     PRESTypePluginDefaultEndpointData_delete(endpoint_data);
 }
 
-void    
+void
 InputCommandTypePlugin_return_sample(
     PRESTypePluginEndpointData endpoint_data,
     InputCommandType *sample,
@@ -2599,7 +2710,7 @@ void InputCommandTypePlugin_finalize_optional_members(
         sample, deletePointers);
 }
 
-RTIBool 
+RTIBool
 InputCommandTypePlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
     InputCommandType *dst,
@@ -2612,7 +2723,7 @@ InputCommandTypePlugin_copy_sample(
 /* ----------------------------------------------------------------------------
 (De)Serialize functions:
 * ------------------------------------------------------------------------- */
-unsigned int 
+unsigned int
 InputCommandTypePlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -2653,20 +2764,20 @@ InputCommandTypePlugin_serialize_to_cdr_buffer_ex(
 
     encapsulationId = DDS_TypeCode_get_native_encapsulation(
         (DDS_TypeCode *) plugin.typeCode,
-        representation);    
+        representation);
     if (encapsulationId == RTI_CDR_ENCAPSULATION_ID_INVALID) {
         return RTI_FALSE;
     }
 
     epd._maxSizeSerializedSample =
     InputCommandTypePlugin_get_serialized_sample_max_size(
-        (PRESTypePluginEndpointData)&epd, 
-        RTI_TRUE, 
+        (PRESTypePluginEndpointData)&epd,
+        RTI_TRUE,
         encapsulationId,
         0);
 
     if (buffer == NULL) {
-        *length = 
+        *length =
         PRESTypePlugin_interpretedGetSerializedSampleSize(
             (PRESTypePluginEndpointData)&epd,
             RTI_TRUE,
@@ -2679,7 +2790,7 @@ InputCommandTypePlugin_serialize_to_cdr_buffer_ex(
         }
 
         return RTI_TRUE;
-    }    
+    }
 
     RTICdrStream_init(&cdrStream);
     RTICdrStream_set(&cdrStream, (char *)buffer, *length);
@@ -2740,7 +2851,7 @@ InputCommandTypePlugin_deserialize_from_cdr_buffer(
     RTICdrStream_set(&cdrStream, (char *)buffer, length);
 
     InputCommandType_finalize_optional_members(sample, RTI_TRUE);
-    return PRESTypePlugin_interpretedDeserialize( 
+    return PRESTypePlugin_interpretedDeserialize(
         (PRESTypePluginEndpointData)&epd, sample,
         &cdrStream, RTI_TRUE, RTI_TRUE,
         NULL);
@@ -2751,7 +2862,7 @@ DDS_ReturnCode_t
 InputCommandTypePlugin_data_to_string(
     const InputCommandType *sample,
     char *_str,
-    DDS_UnsignedLong *str_size, 
+    DDS_UnsignedLong *str_size,
     const struct DDS_PrintFormatProperty *property)
 {
     DDS_DynamicData *data = NULL;
@@ -2772,8 +2883,8 @@ InputCommandTypePlugin_data_to_string(
         return DDS_RETCODE_BAD_PARAMETER;
     }
     if (!InputCommandTypePlugin_serialize_to_cdr_buffer(
-        NULL, 
-        &length, 
+        NULL,
+        &length,
         sample)) {
         return DDS_RETCODE_ERROR;
     }
@@ -2784,14 +2895,14 @@ InputCommandTypePlugin_data_to_string(
     }
 
     if (!InputCommandTypePlugin_serialize_to_cdr_buffer(
-        buffer, 
-        &length, 
+        buffer,
+        &length,
         sample)) {
         RTIOsapiHeap_freeBuffer(buffer);
         return DDS_RETCODE_ERROR;
     }
     data = DDS_DynamicData_new(
-        InputCommandType_get_typecode(), 
+        InputCommandType_get_typecode(),
         &DDS_DYNAMIC_DATA_PROPERTY_DEFAULT);
     if (data == NULL) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -2806,7 +2917,7 @@ InputCommandTypePlugin_data_to_string(
     }
 
     retCode = DDS_PrintFormatProperty_to_print_format(
-        property, 
+        property,
         &printFormat);
     if (retCode != DDS_RETCODE_OK) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -2815,9 +2926,9 @@ InputCommandTypePlugin_data_to_string(
     }
 
     retCode = DDS_DynamicDataFormatter_to_string_w_format(
-        data, 
+        data,
         _str,
-        str_size, 
+        str_size,
         &printFormat);
     if (retCode != DDS_RETCODE_OK) {
         RTIOsapiHeap_freeBuffer(buffer);
@@ -2831,7 +2942,7 @@ InputCommandTypePlugin_data_to_string(
 }
 #endif
 
-unsigned int 
+unsigned int
 InputCommandTypePlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
@@ -2855,7 +2966,7 @@ InputCommandTypePlugin_get_serialized_sample_max_size(
 Key Management functions:
 * -------------------------------------------------------------------------------------- */
 
-PRESTypePluginKeyKind 
+PRESTypePluginKeyKind
 InputCommandTypePlugin_get_key_kind(void)
 {
     return PRES_TYPEPLUGIN_NO_KEY;
@@ -2863,7 +2974,7 @@ InputCommandTypePlugin_get_key_kind(void)
 
 RTIBool InputCommandTypePlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    InputCommandType **sample, 
+    InputCommandType **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *cdrStream,
     RTIBool deserialize_encapsulation,
@@ -2884,7 +2995,7 @@ RTIBool InputCommandTypePlugin_deserialize_key(
         deserialize_encapsulation,
         deserialize_key,
         endpoint_plugin_qos);
-    return result;    
+    return result;
 
 }
 
@@ -2928,18 +3039,21 @@ InputCommandTypePlugin_get_serialized_key_max_size_for_keyhash(
 
 struct RTIXCdrInterpreterPrograms * InputCommandTypePlugin_get_programs(void)
 {
+    if (!RTIXCdrXTypesComplianceMask_verifyGeneratedXTypesMask(0x0000018C)) {
+        return NULL;
+    }
     return ::rti::xcdr::get_cdr_serialization_programs<
-    InputCommandType, 
+    InputCommandType,
     true, true, true>();
 }
 
 /* ------------------------------------------------------------------------
 * Plug-in Installation Methods
 * ------------------------------------------------------------------------ */
-struct PRESTypePlugin *InputCommandTypePlugin_new(void) 
-{ 
+struct PRESTypePlugin *InputCommandTypePlugin_new(void)
+{
     struct PRESTypePlugin *plugin = NULL;
-    const struct PRESTypePluginVersion PLUGIN_VERSION = 
+    const struct PRESTypePluginVersion PLUGIN_VERSION =
     PRES_TYPE_PLUGIN_VERSION_2_0;
 
     RTIOsapiHeap_allocateStructure(
@@ -2978,7 +3092,7 @@ struct PRESTypePlugin *InputCommandTypePlugin_new(void)
     (PRESTypePluginFinalizeOptionalMembersFunction)
     InputCommandTypePlugin_finalize_optional_members;
 
-    plugin->serializeFnc = 
+    plugin->serializeFnc =
     (PRESTypePluginSerializeFunction) PRESTypePlugin_interpretedSerialize;
     plugin->deserializeFnc =
     (PRESTypePluginDeserializeFunction) PRESTypePlugin_interpretedDeserializeWithAlloc;
@@ -2988,7 +3102,7 @@ struct PRESTypePlugin *InputCommandTypePlugin_new(void)
     plugin->getSerializedSampleMinSizeFnc =
     (PRESTypePluginGetSerializedSampleMinSizeFunction)
     PRESTypePlugin_interpretedGetSerializedSampleMinSize;
-    plugin->getDeserializedSampleMaxSizeFnc = NULL; 
+    plugin->getDeserializedSampleMaxSizeFnc = NULL;
     plugin->getSampleFnc =
     (PRESTypePluginGetSampleFunction)
     InputCommandTypePlugin_get_sample;
@@ -3002,8 +3116,8 @@ struct PRESTypePlugin *InputCommandTypePlugin_new(void)
     /* These functions are only used for keyed types. As this is not a keyed
     type they are all set to NULL
     */
-    plugin->serializeKeyFnc = NULL ;    
-    plugin->deserializeKeyFnc = NULL;  
+    plugin->serializeKeyFnc = NULL ;
+    plugin->deserializeKeyFnc = NULL;
     plugin->getKeyFnc = NULL;
     plugin->returnKeyFnc = NULL;
     plugin->instanceToKeyFnc = NULL;
@@ -3011,19 +3125,19 @@ struct PRESTypePlugin *InputCommandTypePlugin_new(void)
     plugin->getSerializedKeyMaxSizeFnc = NULL;
     plugin->instanceToKeyHashFnc = NULL;
     plugin->serializedSampleToKeyHashFnc = NULL;
-    plugin->serializedKeyToKeyHashFnc = NULL;    
+    plugin->serializedKeyToKeyHashFnc = NULL;
     #ifdef NDDS_STANDALONE_TYPE
-    plugin->typeCode = NULL; 
+    plugin->typeCode = NULL;
     #else
     plugin->typeCode =  (struct RTICdrTypeCode *)InputCommandType_get_typecode();
     #endif
     plugin->languageKind = PRES_TYPEPLUGIN_CPP_LANG;
 
     /* Serialized buffer */
-    plugin->getBuffer = 
+    plugin->getBuffer =
     (PRESTypePluginGetBufferFunction)
     InputCommandTypePlugin_get_buffer;
-    plugin->returnBuffer = 
+    plugin->returnBuffer =
     (PRESTypePluginReturnBufferFunction)
     InputCommandTypePlugin_return_buffer;
     plugin->getBufferWithParams = NULL;
@@ -3032,7 +3146,7 @@ struct PRESTypePlugin *InputCommandTypePlugin_new(void)
     (PRESTypePluginGetSerializedSampleSizeFunction)
     PRESTypePlugin_interpretedGetSerializedSampleSize;
 
-    plugin->getWriterLoanedSampleFnc = NULL; 
+    plugin->getWriterLoanedSampleFnc = NULL;
     plugin->returnWriterLoanedSampleFnc = NULL;
     plugin->returnWriterLoanedSampleFromCookieFnc = NULL;
     plugin->validateWriterLoanedSampleFnc = NULL;
@@ -3047,5 +3161,5 @@ void
 InputCommandTypePlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
-} 
-#undef RTI_CDR_CURRENT_SUBMODULE 
+}
+#undef RTI_CDR_CURRENT_SUBMODULE

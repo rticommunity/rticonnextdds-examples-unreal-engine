@@ -4,20 +4,21 @@
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
 This file was generated from UnrealBasicDDSTypes.idl
-using RTI Code Generator (rtiddsgen) version 4.3.0.7.
+using RTI Code Generator (rtiddsgen) version 4.6.0.
 The rtiddsgen tool is part of the RTI Connext DDS distribution.
 For more information, type 'rtiddsgen -help' at a command shell
 or consult the Code Generator User's Manual.
 */
 
-#ifndef UnrealBasicDDSTypes_795071160_h
-#define UnrealBasicDDSTypes_795071160_h
+#ifndef UnrealBasicDDSTypes_795071791_h
+#define UnrealBasicDDSTypes_795071791_h
 
 #ifndef NDDS_STANDALONE_TYPE
 #ifndef ndds_cpp_h
 #include "ndds/ndds_cpp.h"
 #endif
 #include "rti/xcdr/Interpreter.hpp"
+#include "cdr/cdr_typeCode.h"
 #else
 #include "ndds_standalone_type.h"
 #endif
@@ -39,11 +40,14 @@ class Position
     DDS_Double z;
 
 };
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, start exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) && defined(RTI_WIN32)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+#if !defined(RTI_WIN32) && defined(NDDS_USER_SYMBOL_EXPORT)
+#undef NDDSUSERDllExport
+#define NDDSUSERDllExport __attribute__((visibility("default")))
 #endif
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -52,6 +56,7 @@ NDDSUSERDllExport RTIXCdrTypePlugin *Position_get_type_plugin_info(void);
 NDDSUSERDllExport RTIXCdrSampleAccessInfo *Position_get_sample_access_info(void);
 NDDSUSERDllExport RTIXCdrSampleAccessInfo *Position_get_sample_seq_access_info(void);
 #endif
+
 DDS_SEQUENCE(PositionSeq, Position);
 
 NDDSUSERDllExport
@@ -93,9 +98,7 @@ RTIBool Position_copy(
     Position* dst,
     const Position* src);
 
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, stop exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) || defined(NDDS_USER_SYMBOL_EXPORT)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport
 #endif
@@ -117,11 +120,14 @@ class Velocity
     DDS_Double z;
 
 };
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, start exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) && defined(RTI_WIN32)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+#if !defined(RTI_WIN32) && defined(NDDS_USER_SYMBOL_EXPORT)
+#undef NDDSUSERDllExport
+#define NDDSUSERDllExport __attribute__((visibility("default")))
 #endif
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -130,6 +136,7 @@ NDDSUSERDllExport RTIXCdrTypePlugin *Velocity_get_type_plugin_info(void);
 NDDSUSERDllExport RTIXCdrSampleAccessInfo *Velocity_get_sample_access_info(void);
 NDDSUSERDllExport RTIXCdrSampleAccessInfo *Velocity_get_sample_seq_access_info(void);
 #endif
+
 DDS_SEQUENCE(VelocitySeq, Velocity);
 
 NDDSUSERDllExport
@@ -171,9 +178,7 @@ RTIBool Velocity_copy(
     Velocity* dst,
     const Velocity* src);
 
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, stop exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) || defined(NDDS_USER_SYMBOL_EXPORT)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport
 #endif
@@ -195,11 +200,14 @@ class Attitude
     DDS_Double yaw;
 
 };
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, start exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) && defined(RTI_WIN32)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+#if !defined(RTI_WIN32) && defined(NDDS_USER_SYMBOL_EXPORT)
+#undef NDDSUSERDllExport
+#define NDDSUSERDllExport __attribute__((visibility("default")))
 #endif
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -208,6 +216,7 @@ NDDSUSERDllExport RTIXCdrTypePlugin *Attitude_get_type_plugin_info(void);
 NDDSUSERDllExport RTIXCdrSampleAccessInfo *Attitude_get_sample_access_info(void);
 NDDSUSERDllExport RTIXCdrSampleAccessInfo *Attitude_get_sample_seq_access_info(void);
 #endif
+
 DDS_SEQUENCE(AttitudeSeq, Attitude);
 
 NDDSUSERDllExport
@@ -249,9 +258,7 @@ RTIBool Attitude_copy(
     Attitude* dst,
     const Attitude* src);
 
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, stop exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) || defined(NDDS_USER_SYMBOL_EXPORT)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport
 #endif
@@ -283,11 +290,14 @@ class AActorType
     Attitude rot;
 
 };
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, start exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) && defined(RTI_WIN32)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+#if !defined(RTI_WIN32) && defined(NDDS_USER_SYMBOL_EXPORT)
+#undef NDDSUSERDllExport
+#define NDDSUSERDllExport __attribute__((visibility("default")))
 #endif
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -296,6 +306,7 @@ NDDSUSERDllExport RTIXCdrTypePlugin *AActorType_get_type_plugin_info(void);
 NDDSUSERDllExport RTIXCdrSampleAccessInfo *AActorType_get_sample_access_info(void);
 NDDSUSERDllExport RTIXCdrSampleAccessInfo *AActorType_get_sample_seq_access_info(void);
 #endif
+
 DDS_SEQUENCE(AActorTypeSeq, AActorType);
 
 NDDSUSERDllExport
@@ -337,9 +348,7 @@ RTIBool AActorType_copy(
     AActorType* dst,
     const AActorType* src);
 
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, stop exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) || defined(NDDS_USER_SYMBOL_EXPORT)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport
 #endif
@@ -371,11 +380,14 @@ class InputCommandType
     DDS_Float brake;
 
 };
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, start exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) && defined(RTI_WIN32)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport __declspec(dllexport)
+#endif
+
+#if !defined(RTI_WIN32) && defined(NDDS_USER_SYMBOL_EXPORT)
+#undef NDDSUSERDllExport
+#define NDDSUSERDllExport __attribute__((visibility("default")))
 #endif
 
 #ifndef NDDS_STANDALONE_TYPE
@@ -384,6 +396,7 @@ NDDSUSERDllExport RTIXCdrTypePlugin *InputCommandType_get_type_plugin_info(void)
 NDDSUSERDllExport RTIXCdrSampleAccessInfo *InputCommandType_get_sample_access_info(void);
 NDDSUSERDllExport RTIXCdrSampleAccessInfo *InputCommandType_get_sample_seq_access_info(void);
 #endif
+
 DDS_SEQUENCE(InputCommandTypeSeq, InputCommandType);
 
 NDDSUSERDllExport
@@ -425,9 +438,7 @@ RTIBool InputCommandType_copy(
     InputCommandType* dst,
     const InputCommandType* src);
 
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, stop exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) || defined(NDDS_USER_SYMBOL_EXPORT)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport
 #endif
@@ -466,4 +477,3 @@ namespace rti {
 #endif
 
 #endif /* UnrealBasicDDSTypes */
-

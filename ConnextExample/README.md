@@ -4,7 +4,7 @@ This example was built with the following product versions:
 
 * **Unreal Engine 5.6.1**
 
-* **RTI Connext DDS Professional 7.3.0**
+* **RTI Connext DDS Professional 7.6.0**
 
 * **Microsoft Visual Studio 2022**
 
@@ -33,15 +33,21 @@ The example was modified to publish the state of the vehicle (Cartesian position
 
 ### To Run
 
-1.  Assuming that you have **Unreal Engine 5.6.1** (or compatible version) installed.  You should also install **RTI Connext DDS Professional 7.3.0**.  You can get a free download and license from [www.rti.com/get-connext](https://www.rti.com/get-connext).
+1.  Assuming that you have **Unreal Engine 5.6.1** (or compatible version) installed.  You should also install **RTI Connext DDS Professional 7.6.0**.  You can get a free download and license from [www.rti.com/get-connext](https://www.rti.com/get-connext).
     
     Install per instructions and make a note of your installation directory.  You will need create and set the value of an environment variable `NDDSHOME = <install dir>` in your host.
 
-2.  Open [ConnextExample.uproject](./ConnextExample.uproject) in the **Unreal Engine** IDE (aka *Editor*).
+2.  Open [ConnextExample.uproject](./ConnextExample.uproject) in the **Unreal Engine** IDE (aka *Unreal Editor*).
 
-    This may open a dialog window telling you that the *ConnextExample* module is "missing or built with a different engine version" and asks if you "would like to rebuild them now?".  Go ahead and click on *Yes*...when completed successfully, the *Editor* should open with the project loaded.
+    This may open a dialog window telling you that the *ConnextExample* module is "missing or built with a different engine version" and asks if you "would like to rebuild them now?".  Go ahead and click on *Yes*...when completed successfully, the *Unreal Editor* should open with the project loaded.
     
     Now Generate or Refresh the *Visual Studio Project* using **Tools --> Generate Visual Studio Project** or **Tools --> Refresh Visual Studio Project**
+
+    IT's POSSIBLE THAT THIS DOESN'T WORK...the "rebuild" fails and the *Unreal Editor* doesn't open the project and doesn't even start.  In that case, you will need to regenerate the *Visual Studio* projects manually.  Run:
+
+    `"C:\Program Files\Epic Games\UE_5.6\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.exe" -projectfiles -project="<installdir>\rticonnextdds-examples-unreal-engine\ConnextExample\ConnextExample.uproject" -game -engine`
+
+    replacing `<installdir>` with the location of `rticonnextdds-examples-unreal-engine`.
 
 3.  Compile the **Connext DDS** C++ components using **Microsoft Visual Studio**.  
 
@@ -49,7 +55,7 @@ The example was modified to publish the state of the vehicle (Cartesian position
     
     In **Visual Studio**, select the `Development Editor` configuration and Build the solution.
 
-4.  Start the application in the *PIE* (Play-In-Editor) using the "Play" button with the green triangle icon.
+4.  Now open the `ConnextExample.uproject` in the *Unreal Editor* if you weren't able to before, and start the application in the *PIE* (Play-In-Editor) using the "Play" button with the green triangle icon.
 
 5.  You can move the vehicle using the keyboard's up/down/left/right arrow keys (after clicking on the application window showing the vehicle).
 

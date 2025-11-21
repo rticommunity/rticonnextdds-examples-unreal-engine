@@ -3,14 +3,14 @@
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
 This file was generated from UnrealBasicDDSTypes.idl
-using RTI Code Generator (rtiddsgen) version 4.3.0.7.
+using RTI Code Generator (rtiddsgen) version 4.6.0.
 The rtiddsgen tool is part of the RTI Connext DDS distribution.
 For more information, type 'rtiddsgen -help' at a command shell
 or consult the Code Generator User's Manual.
 */
 
-#ifndef UnrealBasicDDSTypesSupport_795071160_h
-#define UnrealBasicDDSTypesSupport_795071160_h
+#ifndef UnrealBasicDDSTypesSupport_795071791_h
+#define UnrealBasicDDSTypesSupport_795071791_h
 
 /* Uses */
 #include "UnrealBasicDDSTypes.h"
@@ -37,12 +37,14 @@ Organized using the well-documented "Generics Pattern" for
 implementing generics in C and C++.
 */
 
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, start exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) && defined(RTI_WIN32)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport __declspec(dllexport)
+#endif
 
+#if !defined(RTI_WIN32) && defined(NDDS_USER_SYMBOL_EXPORT)
+#undef NDDSUSERDllExport
+#define NDDSUSERDllExport __attribute__((visibility("default")))
 #endif
 
 DDS_TYPESUPPORT_CPP(
@@ -56,9 +58,7 @@ DDS_DATAWRITER_WITH_DATA_CONSTRUCTOR_METHODS_CPP(AActorTypeDataWriter, AActorTyp
 DDS_DATAREADER_W_DATA_CONSISTENCY_CHECK(AActorTypeDataReader, AActorTypeSeq, AActorType);
 #undef RTI_ENABLE_TDATAREADER_DATA_CONSISTENCY_CHECK_METHOD
 
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, stop exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) || defined(NDDS_USER_SYMBOL_EXPORT)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport
 #endif
@@ -72,12 +72,14 @@ Organized using the well-documented "Generics Pattern" for
 implementing generics in C and C++.
 */
 
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, start exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) && defined(RTI_WIN32)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport __declspec(dllexport)
+#endif
 
+#if !defined(RTI_WIN32) && defined(NDDS_USER_SYMBOL_EXPORT)
+#undef NDDSUSERDllExport
+#define NDDSUSERDllExport __attribute__((visibility("default")))
 #endif
 
 DDS_TYPESUPPORT_CPP(
@@ -91,12 +93,9 @@ DDS_DATAWRITER_WITH_DATA_CONSTRUCTOR_METHODS_CPP(InputCommandTypeDataWriter, Inp
 DDS_DATAREADER_W_DATA_CONSISTENCY_CHECK(InputCommandTypeDataReader, InputCommandTypeSeq, InputCommandType);
 #undef RTI_ENABLE_TDATAREADER_DATA_CONSISTENCY_CHECK_METHOD
 
-#if (defined(RTI_WIN32) || defined (RTI_WINCE) || defined(RTI_INTIME)) && defined(NDDS_USER_DLL_EXPORT)
-/* If the code is building on Windows, stop exporting symbols.
-*/
+#if defined(NDDS_USER_DLL_EXPORT) || defined(NDDS_USER_SYMBOL_EXPORT)
 #undef NDDSUSERDllExport
 #define NDDSUSERDllExport
 #endif
 
-#endif  /* UnrealBasicDDSTypesSupport_795071160_h */
-
+#endif  /* UnrealBasicDDSTypesSupport_795071791_h */

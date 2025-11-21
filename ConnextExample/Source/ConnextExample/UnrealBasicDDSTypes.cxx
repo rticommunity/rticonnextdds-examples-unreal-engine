@@ -4,7 +4,7 @@
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
 This file was generated from UnrealBasicDDSTypes.idl 
-using RTI Code Generator (rtiddsgen) version 4.3.0.7.
+using RTI Code Generator (rtiddsgen) version 4.6.0.
 The rtiddsgen tool is part of the RTI Connext DDS distribution.
 For more information, type 'rtiddsgen -help' at a command shell
 or consult the Code Generator User's Manual.
@@ -29,6 +29,7 @@ or consult the Code Generator User's Manual.
 #ifndef osapi_heap_h
 #include "osapi/osapi_heap.h" 
 #endif
+#include "osapi/osapi_atomic.h"
 #else
 #include "ndds_standalone_type.h"
 #endif
@@ -45,9 +46,10 @@ or consult the Code Generator User's Manual.
 const char *PositionTYPENAME = "Position";
 
 #ifndef NDDS_STANDALONE_TYPE
+
 DDS_TypeCode * Position_get_typecode(void)
 {
-    static RTIBool is_initialized = RTI_FALSE;
+    static RTI_ATOMIC(RTIBool) is_initialized;
 
     static DDS_TypeCode_Member Position_g_tc_members[3]=
     {
@@ -66,8 +68,6 @@ DDS_TypeCode * Position_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }, 
         {
@@ -84,8 +84,6 @@ DDS_TypeCode * Position_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }, 
         {
@@ -102,8 +100,6 @@ DDS_TypeCode * Position_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }
     };
@@ -127,17 +123,16 @@ DDS_TypeCode * Position_get_typecode(void)
             NULL /* _typePlugin: assigned later */
         }}; /* Type code for Position*/
 
-    if (is_initialized) {
+    if (RTIOsapiAtomic_load32(&is_initialized, RTI_OSAPI_ATOMIC_MEMORY_ORDER_ACQUIRE)) {
         return &Position_g_tc;
     }
 
-    is_initialized = RTI_TRUE;
-
     Position_g_tc._data._annotations._allowedDataRepresentationMask = 5;
+    Position_g_tc._data._annotations._isNested = RTI_XCDR_TRUE;
 
-    Position_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
-    Position_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
-    Position_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
+    Position_g_tc_members[0]._representation._typeCode =  (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
+    Position_g_tc_members[1]._representation._typeCode =  (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
+    Position_g_tc_members[2]._representation._typeCode =  (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
 
     /* Initialize the values for member annotations. */
     Position_g_tc_members[0]._annotations._defaultValue._d = RTI_XCDR_TK_DOUBLE;
@@ -163,6 +158,11 @@ DDS_TypeCode * Position_get_typecode(void)
     Position_get_sample_access_info();
     Position_g_tc._data._typePlugin =
     Position_get_type_plugin_info();    
+
+    RTIOsapiAtomic_store32(
+        &is_initialized,
+        RTI_TRUE,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_RELEASE);
 
     return &Position_g_tc;
 }
@@ -191,7 +191,7 @@ RTIXCdrSampleAccessInfo *Position_get_sample_seq_access_info()
 
 RTIXCdrSampleAccessInfo *Position_get_sample_access_info()
 {
-    static RTIBool is_initialized = RTI_FALSE;
+    static RTI_ATOMIC(RTIBool) is_initialized;
 
     Position *sample;
 
@@ -201,7 +201,9 @@ RTIXCdrSampleAccessInfo *Position_get_sample_access_info()
     static RTIXCdrSampleAccessInfo Position_g_sampleAccessInfo = 
     RTIXCdrSampleAccessInfo_INITIALIZER;
 
-    if (is_initialized) {
+    if (RTIOsapiAtomic_load32(
+        &is_initialized,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_ACQUIRE)) {
         return (RTIXCdrSampleAccessInfo*) &Position_g_sampleAccessInfo;
     }
 
@@ -246,7 +248,10 @@ RTIXCdrSampleAccessInfo *Position_get_sample_access_info()
     RTI_XCDR_TYPE_BINDING_CPP ;
 
     RTIXCdrHeap_freeStruct(sample);
-    is_initialized = RTI_TRUE;
+    RTIOsapiAtomic_store32(
+        &is_initialized,
+        RTI_TRUE,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_RELEASE);
     return (RTIXCdrSampleAccessInfo*) &Position_g_sampleAccessInfo;
 }
 RTIXCdrTypePlugin *Position_get_type_plugin_info()
@@ -454,9 +459,10 @@ RTIBool Position_copy(
 const char *VelocityTYPENAME = "Velocity";
 
 #ifndef NDDS_STANDALONE_TYPE
+
 DDS_TypeCode * Velocity_get_typecode(void)
 {
-    static RTIBool is_initialized = RTI_FALSE;
+    static RTI_ATOMIC(RTIBool) is_initialized;
 
     static DDS_TypeCode_Member Velocity_g_tc_members[3]=
     {
@@ -475,8 +481,6 @@ DDS_TypeCode * Velocity_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }, 
         {
@@ -493,8 +497,6 @@ DDS_TypeCode * Velocity_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }, 
         {
@@ -511,8 +513,6 @@ DDS_TypeCode * Velocity_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }
     };
@@ -536,17 +536,16 @@ DDS_TypeCode * Velocity_get_typecode(void)
             NULL /* _typePlugin: assigned later */
         }}; /* Type code for Velocity*/
 
-    if (is_initialized) {
+    if (RTIOsapiAtomic_load32(&is_initialized, RTI_OSAPI_ATOMIC_MEMORY_ORDER_ACQUIRE)) {
         return &Velocity_g_tc;
     }
 
-    is_initialized = RTI_TRUE;
-
     Velocity_g_tc._data._annotations._allowedDataRepresentationMask = 5;
+    Velocity_g_tc._data._annotations._isNested = RTI_XCDR_TRUE;
 
-    Velocity_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
-    Velocity_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
-    Velocity_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
+    Velocity_g_tc_members[0]._representation._typeCode =  (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
+    Velocity_g_tc_members[1]._representation._typeCode =  (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
+    Velocity_g_tc_members[2]._representation._typeCode =  (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
 
     /* Initialize the values for member annotations. */
     Velocity_g_tc_members[0]._annotations._defaultValue._d = RTI_XCDR_TK_DOUBLE;
@@ -572,6 +571,11 @@ DDS_TypeCode * Velocity_get_typecode(void)
     Velocity_get_sample_access_info();
     Velocity_g_tc._data._typePlugin =
     Velocity_get_type_plugin_info();    
+
+    RTIOsapiAtomic_store32(
+        &is_initialized,
+        RTI_TRUE,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_RELEASE);
 
     return &Velocity_g_tc;
 }
@@ -600,7 +604,7 @@ RTIXCdrSampleAccessInfo *Velocity_get_sample_seq_access_info()
 
 RTIXCdrSampleAccessInfo *Velocity_get_sample_access_info()
 {
-    static RTIBool is_initialized = RTI_FALSE;
+    static RTI_ATOMIC(RTIBool) is_initialized;
 
     Velocity *sample;
 
@@ -610,7 +614,9 @@ RTIXCdrSampleAccessInfo *Velocity_get_sample_access_info()
     static RTIXCdrSampleAccessInfo Velocity_g_sampleAccessInfo = 
     RTIXCdrSampleAccessInfo_INITIALIZER;
 
-    if (is_initialized) {
+    if (RTIOsapiAtomic_load32(
+        &is_initialized,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_ACQUIRE)) {
         return (RTIXCdrSampleAccessInfo*) &Velocity_g_sampleAccessInfo;
     }
 
@@ -655,7 +661,10 @@ RTIXCdrSampleAccessInfo *Velocity_get_sample_access_info()
     RTI_XCDR_TYPE_BINDING_CPP ;
 
     RTIXCdrHeap_freeStruct(sample);
-    is_initialized = RTI_TRUE;
+    RTIOsapiAtomic_store32(
+        &is_initialized,
+        RTI_TRUE,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_RELEASE);
     return (RTIXCdrSampleAccessInfo*) &Velocity_g_sampleAccessInfo;
 }
 RTIXCdrTypePlugin *Velocity_get_type_plugin_info()
@@ -863,9 +872,10 @@ RTIBool Velocity_copy(
 const char *AttitudeTYPENAME = "Attitude";
 
 #ifndef NDDS_STANDALONE_TYPE
+
 DDS_TypeCode * Attitude_get_typecode(void)
 {
-    static RTIBool is_initialized = RTI_FALSE;
+    static RTI_ATOMIC(RTIBool) is_initialized;
 
     static DDS_TypeCode_Member Attitude_g_tc_members[3]=
     {
@@ -884,8 +894,6 @@ DDS_TypeCode * Attitude_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }, 
         {
@@ -902,8 +910,6 @@ DDS_TypeCode * Attitude_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }, 
         {
@@ -920,8 +926,6 @@ DDS_TypeCode * Attitude_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }
     };
@@ -945,17 +949,16 @@ DDS_TypeCode * Attitude_get_typecode(void)
             NULL /* _typePlugin: assigned later */
         }}; /* Type code for Attitude*/
 
-    if (is_initialized) {
+    if (RTIOsapiAtomic_load32(&is_initialized, RTI_OSAPI_ATOMIC_MEMORY_ORDER_ACQUIRE)) {
         return &Attitude_g_tc;
     }
 
-    is_initialized = RTI_TRUE;
-
     Attitude_g_tc._data._annotations._allowedDataRepresentationMask = 5;
+    Attitude_g_tc._data._annotations._isNested = RTI_XCDR_TRUE;
 
-    Attitude_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
-    Attitude_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
-    Attitude_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
+    Attitude_g_tc_members[0]._representation._typeCode =  (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
+    Attitude_g_tc_members[1]._representation._typeCode =  (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
+    Attitude_g_tc_members[2]._representation._typeCode =  (RTICdrTypeCode *)&DDS_g_tc_double_w_new;
 
     /* Initialize the values for member annotations. */
     Attitude_g_tc_members[0]._annotations._defaultValue._d = RTI_XCDR_TK_DOUBLE;
@@ -981,6 +984,11 @@ DDS_TypeCode * Attitude_get_typecode(void)
     Attitude_get_sample_access_info();
     Attitude_g_tc._data._typePlugin =
     Attitude_get_type_plugin_info();    
+
+    RTIOsapiAtomic_store32(
+        &is_initialized,
+        RTI_TRUE,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_RELEASE);
 
     return &Attitude_g_tc;
 }
@@ -1009,7 +1017,7 @@ RTIXCdrSampleAccessInfo *Attitude_get_sample_seq_access_info()
 
 RTIXCdrSampleAccessInfo *Attitude_get_sample_access_info()
 {
-    static RTIBool is_initialized = RTI_FALSE;
+    static RTI_ATOMIC(RTIBool) is_initialized;
 
     Attitude *sample;
 
@@ -1019,7 +1027,9 @@ RTIXCdrSampleAccessInfo *Attitude_get_sample_access_info()
     static RTIXCdrSampleAccessInfo Attitude_g_sampleAccessInfo = 
     RTIXCdrSampleAccessInfo_INITIALIZER;
 
-    if (is_initialized) {
+    if (RTIOsapiAtomic_load32(
+        &is_initialized,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_ACQUIRE)) {
         return (RTIXCdrSampleAccessInfo*) &Attitude_g_sampleAccessInfo;
     }
 
@@ -1064,7 +1074,10 @@ RTIXCdrSampleAccessInfo *Attitude_get_sample_access_info()
     RTI_XCDR_TYPE_BINDING_CPP ;
 
     RTIXCdrHeap_freeStruct(sample);
-    is_initialized = RTI_TRUE;
+    RTIOsapiAtomic_store32(
+        &is_initialized,
+        RTI_TRUE,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_RELEASE);
     return (RTIXCdrSampleAccessInfo*) &Attitude_g_sampleAccessInfo;
 }
 RTIXCdrTypePlugin *Attitude_get_type_plugin_info()
@@ -1272,9 +1285,10 @@ RTIBool Attitude_copy(
 const char *AActorTypeTYPENAME = "AActorType";
 
 #ifndef NDDS_STANDALONE_TYPE
+
 DDS_TypeCode * AActorType_get_typecode(void)
 {
-    static RTIBool is_initialized = RTI_FALSE;
+    static RTI_ATOMIC(RTIBool) is_initialized;
 
     static DDS_TypeCode_Member AActorType_g_tc_members[3]=
     {
@@ -1293,8 +1307,6 @@ DDS_TypeCode * AActorType_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }, 
         {
@@ -1311,8 +1323,6 @@ DDS_TypeCode * AActorType_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }, 
         {
@@ -1329,8 +1339,6 @@ DDS_TypeCode * AActorType_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }
     };
@@ -1354,17 +1362,15 @@ DDS_TypeCode * AActorType_get_typecode(void)
             NULL /* _typePlugin: assigned later */
         }}; /* Type code for AActorType*/
 
-    if (is_initialized) {
+    if (RTIOsapiAtomic_load32(&is_initialized, RTI_OSAPI_ATOMIC_MEMORY_ORDER_ACQUIRE)) {
         return &AActorType_g_tc;
     }
 
-    is_initialized = RTI_TRUE;
-
     AActorType_g_tc._data._annotations._allowedDataRepresentationMask = 5;
 
-    AActorType_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)Position_get_typecode();
-    AActorType_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)Velocity_get_typecode();
-    AActorType_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)Attitude_get_typecode();
+    AActorType_g_tc_members[0]._representation._typeCode =  (RTICdrTypeCode *)Position_get_typecode();
+    AActorType_g_tc_members[1]._representation._typeCode =  (RTICdrTypeCode *)Velocity_get_typecode();
+    AActorType_g_tc_members[2]._representation._typeCode =  (RTICdrTypeCode *)Attitude_get_typecode();
 
     /* Initialize the values for member annotations. */
 
@@ -1372,6 +1378,11 @@ DDS_TypeCode * AActorType_get_typecode(void)
     AActorType_get_sample_access_info();
     AActorType_g_tc._data._typePlugin =
     AActorType_get_type_plugin_info();    
+
+    RTIOsapiAtomic_store32(
+        &is_initialized,
+        RTI_TRUE,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_RELEASE);
 
     return &AActorType_g_tc;
 }
@@ -1400,7 +1411,7 @@ RTIXCdrSampleAccessInfo *AActorType_get_sample_seq_access_info()
 
 RTIXCdrSampleAccessInfo *AActorType_get_sample_access_info()
 {
-    static RTIBool is_initialized = RTI_FALSE;
+    static RTI_ATOMIC(RTIBool) is_initialized;
 
     AActorType *sample;
 
@@ -1410,7 +1421,9 @@ RTIXCdrSampleAccessInfo *AActorType_get_sample_access_info()
     static RTIXCdrSampleAccessInfo AActorType_g_sampleAccessInfo = 
     RTIXCdrSampleAccessInfo_INITIALIZER;
 
-    if (is_initialized) {
+    if (RTIOsapiAtomic_load32(
+        &is_initialized,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_ACQUIRE)) {
         return (RTIXCdrSampleAccessInfo*) &AActorType_g_sampleAccessInfo;
     }
 
@@ -1455,7 +1468,10 @@ RTIXCdrSampleAccessInfo *AActorType_get_sample_access_info()
     RTI_XCDR_TYPE_BINDING_CPP ;
 
     RTIXCdrHeap_freeStruct(sample);
-    is_initialized = RTI_TRUE;
+    RTIOsapiAtomic_store32(
+        &is_initialized,
+        RTI_TRUE,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_RELEASE);
     return (RTIXCdrSampleAccessInfo*) &AActorType_g_sampleAccessInfo;
 }
 RTIXCdrTypePlugin *AActorType_get_type_plugin_info()
@@ -1684,9 +1700,10 @@ RTIBool AActorType_copy(
 const char *InputCommandTypeTYPENAME = "InputCommandType";
 
 #ifndef NDDS_STANDALONE_TYPE
+
 DDS_TypeCode * InputCommandType_get_typecode(void)
 {
-    static RTIBool is_initialized = RTI_FALSE;
+    static RTI_ATOMIC(RTIBool) is_initialized;
 
     static DDS_TypeCode_Member InputCommandType_g_tc_members[3]=
     {
@@ -1705,8 +1722,6 @@ DDS_TypeCode * InputCommandType_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }, 
         {
@@ -1723,8 +1738,6 @@ DDS_TypeCode * InputCommandType_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }, 
         {
@@ -1741,8 +1754,6 @@ DDS_TypeCode * InputCommandType_get_typecode(void)
             NULL, /* Ignored */
             RTI_CDR_REQUIRED_MEMBER, /* Is a key? */
             DDS_PUBLIC_MEMBER,/* Member visibility */
-            1,
-            NULL, /* Ignored */
             RTICdrTypeCodeAnnotations_INITIALIZER
         }
     };
@@ -1766,17 +1777,15 @@ DDS_TypeCode * InputCommandType_get_typecode(void)
             NULL /* _typePlugin: assigned later */
         }}; /* Type code for InputCommandType*/
 
-    if (is_initialized) {
+    if (RTIOsapiAtomic_load32(&is_initialized, RTI_OSAPI_ATOMIC_MEMORY_ORDER_ACQUIRE)) {
         return &InputCommandType_g_tc;
     }
 
-    is_initialized = RTI_TRUE;
-
     InputCommandType_g_tc._data._annotations._allowedDataRepresentationMask = 5;
 
-    InputCommandType_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_float_w_new;
-    InputCommandType_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_float_w_new;
-    InputCommandType_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_float_w_new;
+    InputCommandType_g_tc_members[0]._representation._typeCode =  (RTICdrTypeCode *)&DDS_g_tc_float_w_new;
+    InputCommandType_g_tc_members[1]._representation._typeCode =  (RTICdrTypeCode *)&DDS_g_tc_float_w_new;
+    InputCommandType_g_tc_members[2]._representation._typeCode =  (RTICdrTypeCode *)&DDS_g_tc_float_w_new;
 
     /* Initialize the values for member annotations. */
     InputCommandType_g_tc_members[0]._annotations._defaultValue._d = RTI_XCDR_TK_FLOAT;
@@ -1802,6 +1811,11 @@ DDS_TypeCode * InputCommandType_get_typecode(void)
     InputCommandType_get_sample_access_info();
     InputCommandType_g_tc._data._typePlugin =
     InputCommandType_get_type_plugin_info();    
+
+    RTIOsapiAtomic_store32(
+        &is_initialized,
+        RTI_TRUE,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_RELEASE);
 
     return &InputCommandType_g_tc;
 }
@@ -1830,7 +1844,7 @@ RTIXCdrSampleAccessInfo *InputCommandType_get_sample_seq_access_info()
 
 RTIXCdrSampleAccessInfo *InputCommandType_get_sample_access_info()
 {
-    static RTIBool is_initialized = RTI_FALSE;
+    static RTI_ATOMIC(RTIBool) is_initialized;
 
     InputCommandType *sample;
 
@@ -1840,7 +1854,9 @@ RTIXCdrSampleAccessInfo *InputCommandType_get_sample_access_info()
     static RTIXCdrSampleAccessInfo InputCommandType_g_sampleAccessInfo = 
     RTIXCdrSampleAccessInfo_INITIALIZER;
 
-    if (is_initialized) {
+    if (RTIOsapiAtomic_load32(
+        &is_initialized,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_ACQUIRE)) {
         return (RTIXCdrSampleAccessInfo*) &InputCommandType_g_sampleAccessInfo;
     }
 
@@ -1885,7 +1901,10 @@ RTIXCdrSampleAccessInfo *InputCommandType_get_sample_access_info()
     RTI_XCDR_TYPE_BINDING_CPP ;
 
     RTIXCdrHeap_freeStruct(sample);
-    is_initialized = RTI_TRUE;
+    RTIOsapiAtomic_store32(
+        &is_initialized,
+        RTI_TRUE,
+        RTI_OSAPI_ATOMIC_MEMORY_ORDER_RELEASE);
     return (RTIXCdrSampleAccessInfo*) &InputCommandType_g_sampleAccessInfo;
 }
 RTIXCdrTypePlugin *InputCommandType_get_type_plugin_info()
