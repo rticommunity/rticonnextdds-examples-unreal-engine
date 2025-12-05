@@ -13,6 +13,8 @@
 
 #include "DomainParticipantComponent.h"
 
+#include "CoreMinimal.h"
+#include "UObject/NoExportTypes.h"
 #include "Engine/Engine.h" // For GEngine->AddOnScreenDebugMessage
 #include "Engine/World.h"
 #include "Kismet/KismetSystemLibrary.h"
