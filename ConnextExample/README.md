@@ -35,7 +35,7 @@ The example was modified to publish the state of the vehicle (Cartesian position
 
 1.  Assuming that you have **Unreal Engine 5.6.1** (or compatible version) installed.  You should also install **RTI Connext DDS Professional 7.6.0**.  You can get a free download and license from [www.rti.com/get-connext](https://www.rti.com/get-connext).
     
-    Install per instructions and make a note of your installation directory.  You will need create and set the value of an environment variable `NDDSHOME = <install dir>` in your host.
+    Install per instructions and make a note of your installation directory.  You will need to create and set the value of an environment variable `NDDSHOME = <install dir>` in your host.
 
 2.  Open [ConnextExample.uproject](./ConnextExample.uproject) in the **Unreal Engine** IDE (aka *Unreal Editor*).
 
@@ -80,9 +80,9 @@ The following files were created and added to the project:
 
     File used to define datatypes used by **DDS** *Topics* to send/receive data.
 
-    You May customize this file to add your own datatypes or add/create new **.idl** files with additional datatype definitions.  Please refer to this documentation [Creating User Data Types with IDL](https://community.rti.com/static/documentation/connext-dds/current/doc/manuals/connext_dds_professional/users_manual/users_manual/Creating_User_Data_Types_with_IDL.htm#datatypes_842270378_306763).
+    You may customize this file to add your own datatypes or add/create new **.idl** files with additional datatype definitions.  Please refer to this documentation [Creating User Data Types with IDL](https://community.rti.com/static/documentation/connext-dds/current/doc/manuals/connext_dds_professional/users_manual/users_manual/Creating_User_Data_Types_with_IDL.htm#datatypes_842270378_306763).
 
-    After defining your datatypes, you will use the **RTI Connext** code generator, [***rtiddsgen***](https://community.rti.com/static/documentation/connext-dds/current/doc/manuals/connext_dds_professional/code_generator/users_manual/code_generator/users_manual/UsersManual_Title.htm), to generate the source code that is required by *DDS* to use your datatype.
+    After defining your datatypes, you will use the **RTI Connext** code generator, [***rtiddsgen***](https://community.rti.com/static/documentation/connext-dds/current/doc/manuals/connext_dds_professional/code_generator/users_manual/code_generator/users_manual/UsersManual_Title.htm), to generate the source code that is required by **DDS** to use your datatype.
 
     To generate code for C++98 (*NOTE: cannot use C++11 due to RTTI conflict with **Unreal** C++*), you should invoke using (on a Windows host):
 
@@ -90,7 +90,7 @@ The following files were created and added to the project:
 
     Replace `UnrealBasicDDSTypes.idl` with your filename(s) if you want to use a different file.
 
-    `rtiddsgen` should generate the following files which need to be added to the Visual Studio project to be compiled and linked with your component code:
+    `rtiddsgen` should generate the following files which need to be added to the **Visual Studio** project to be compiled and linked with your component code:
 
     * UnrealBasicDDSTypes.h
     * UnrealBasicDDSTypesPlugin.h
@@ -98,7 +98,7 @@ The following files were created and added to the project:
     * UnrealBasicDDSTypesSupport.h
     * UnrealBasicDDSTypesSupport.cxx
 
-    You should not edit these files and these files must be regenerated if you modify the associated "UnrealBasicDDSTypes.idl" file.
+    You should not edit these files, and these files must be regenerated if you modify the associated "UnrealBasicDDSTypes.idl" file.
 
 * [ConnextExampleQosProfiles.xml](./ConnextExampleQosProfiles.xml)
 
@@ -236,7 +236,7 @@ To use dynamically-linked libraries, insert the following lines instead:
 
 * Changing the version of **RTI Connext DDS**
 
-    If you are using a different version of **RTI Connext DDS Professional**, then you should regenerate the C++ source and header files that support the DDS datatypes used by the project as explained in the [Example Details](#example-details) for the file  [UnrealBasicDDSTypes.idl](./Source/ConnextExample/UnrealBasicDDSTypes.idl).
+    If you are using a different version of **RTI Connext DDS Professional**, then you should regenerate the C++ source and header files that support the **DDS** datatypes used by the project as explained in the [Example Details](#example-details) for the file [UnrealBasicDDSTypes.idl](./Source/ConnextExample/UnrealBasicDDSTypes.idl).
     
     You will need to invoke
     
@@ -246,8 +246,7 @@ To use dynamically-linked libraries, insert the following lines instead:
 
 * Changing the platform to Linux
 
-    The code of the **DDS**-related components such as *UDomainParticipantComponent*, *UAActor_DDSDataWriter* and *UInputCommand_DDSComponent*
-are platform independent and should work both in Windows and Linux.
+    The code of the **DDS**-related components such as *UDomainParticipantComponent*, *UAActor_DDSDataWriter* and *UInputCommand_DDSComponent* are platform independent and should work both in Windows and Linux.
 
     In the file, [ConnextExample.Build.cs](./Source/ConnextExample/ConnextExample.Build.cs), there is already code to add the libraries and compiler macros required to build on Linux.
     
